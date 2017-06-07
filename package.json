@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "browserify src/index.js -o public/bundle.js",
-    "start": "watchify src/index.js -o public/bundle.js -v"
+    "start": "watchify src/index.js -o public/bundle.js -v --debug"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
