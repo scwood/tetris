@@ -7,8 +7,5 @@
     "browserify": "^14.4.0",
     "standard": "^10.0.2",
     "watchify": "^3.9.0"
-  },
-  "dependencies": {
-    "redux": "^3.6.0"
   }
 }
