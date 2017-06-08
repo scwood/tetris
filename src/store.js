@@ -1,4 +1,4 @@
-const redux = require('redux');
-const reducer = require('./reducers');
+const redux = require('redux')
+const reducer = require('./reducers')
 
-module.exports = redux.createStore(reducer);
+module.exports = redux.createStore(reducer)
