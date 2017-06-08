@@ -1,17 +1,17 @@
 module.exports = {
   BOARD: {
     HEIGHT: 20,
-    WIDTH: 10,
+    WIDTH: 10
   },
   SQUARE: {
-    WIDTH: 30,
+    WIDTH: 30
   },
   COLORS: {
     GREY: '#EEE',
-    BLACK: '#555',
+    BLACK: '#555'
   },
   TETROMINOS: {
-    O: [0xCC00, 0xCC00, 0xCC00, 0xCC00],
+    O: [0xCC00, 0xCC00, 0xCC00, 0xCC00]
   },
   KEY: {
     ESC: 27,
@@ -21,4 +21,4 @@ module.exports = {
     RIGHT: 39,
     DOWN: 40
   }
-};
+}

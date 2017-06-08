@@ -1,66 +1,64 @@
-const store = require('./store');
-const constants = require('./constants');
-const actions = require('./actions');
+const store = require('./store')
+const constants = require('./constants')
+const actions = require('./actions')
 
-const { moveLeft, moveUp, moveRight, moveDown } = actions;
-const { dispatch } = store;
-const { BOARD, SQUARE, COLORS, KEY } = constants;
-const canvas = document.getElementById('game-canvas');
-const ctx = canvas.getContext('2d');
+const { moveLeft, moveRight, moveDown } = actions
+const { dispatch } = store
+const { BOARD, SQUARE, COLORS, KEY } = constants
+const canvas = document.getElementById('game-canvas')
+const ctx = canvas.getContext('2d')
 
-canvas.height = BOARD.HEIGHT * SQUARE.WIDTH;
-canvas.width = BOARD.WIDTH * SQUARE.WIDTH;
+canvas.height = BOARD.HEIGHT * SQUARE.WIDTH
+canvas.width = BOARD.WIDTH * SQUARE.WIDTH
 
 store.subscribe(() => {
-  drawGame(store.getState());
-  console.log(store.getState());
-});
+  drawGame(store.getState())
+})
 
-drawGame(store.getState());
+drawGame(store.getState())
 
-document.addEventListener('keydown', handleKeydown);
+document.addEventListener('keydown', handleKeydown)
 
-function handleKeydown(e) {
+function handleKeydown (e) {
   const state = store.getState()
+
   const { shape, x, y } = state.currentTetromino;
   switch(e.keyCode) {
     case KEY.LEFT:
       if (isValidPlacement(shape, x - 1, y)) {
         dispatch(moveLeft());
       }
-      break;
-    case KEY.UP:
-      break;
+      break
     case KEY.RIGHT:
-      dispatch(moveRight());
-      break;
+      dispatch(moveRight())
+      break
     case KEY.DOWN:
-      dispatch(moveDown());
-      break;
+      dispatch(moveDown())
+      break
   }
 }
 
-function drawGame(state) {
-  drawGrid(state);
-  drawCurrentTetrimino(state);
+function drawGame (state) {
+  drawGrid(state)
+  drawCurrentTetrimino(state)
 }
 
-function drawGrid(state) {
+function drawGrid (state) {
   state.grid.forEach((row, y) => {
     row.forEach((filled, x) => {
-      drawGridSquare(x, y, filled);
-    });
-  });
+      drawGridSquare(x, y, filled)
+    })
+  })
 }
 
-function drawCurrentTetrimino(state) {
-  const { currentTetromino: { shape, x, y } } = state;
-  drawTetromino(shape, x, y);
+function drawCurrentTetrimino (state) {
+  const { currentTetromino: { shape, x, y } } = state
+  drawTetromino(shape, x, y)
 }
 
 function drawTetromino(shape, x, y) {
   eachBlock(shape, x, y, (x, y) => {
-    drawGridSquare(x, y, true);
+    drawGridSquare(x, y, true)
   });
 }
 
@@ -85,22 +83,22 @@ function eachBlock(shape, x, y, fn) {
       fn(x + col, y + row);
     }
     if (++col === 4) {
-      col = 0;
-      ++row;
+      col = 0
+      ++row
     }
   }
 }
 
-function drawGridSquare(x, y, filled) {
-  const color = filled ? COLORS.BLACK : COLORS.GREY;
-  drawSquare(x * SQUARE.WIDTH, y * SQUARE.WIDTH, SQUARE.WIDTH, color);
+function drawGridSquare (x, y, filled) {
+  const color = filled ? COLORS.BLACK : COLORS.GREY
+  drawSquare(x * SQUARE.WIDTH, y * SQUARE.WIDTH, SQUARE.WIDTH, color)
 }
 
-function drawSquare(x, y, width, color) {
-  ctx.beginPath();
-  ctx.rect(x, y, width, width);
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.stroke();
-  ctx.closePath();
+function drawSquare (x, y, width, color) {
+  ctx.beginPath()
+  ctx.rect(x, y, width, width)
+  ctx.fillStyle = color
+  ctx.fill()
+  ctx.stroke()
+  ctx.closePath()
 }
