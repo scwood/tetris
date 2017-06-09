@@ -1,6 +1,5 @@
-const constants = require('./constants')
+const { BOARD, SQUARE, COLORS } = require('./constants')
 const { eachBlock } = require('./utils')
-const { BOARD, SQUARE, COLORS } = constants
 
 const canvas = document.getElementById('game-canvas')
 const ctx = canvas.getContext('2d')
