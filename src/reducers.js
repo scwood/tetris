@@ -1,16 +1,6 @@
-const constants = require('./constants')
-const actions = require('./actions')
-
-const { MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT } = actions
-const { TETROMINOS } = constants
-
-const initializeState = {
-  shape: TETROMINOS.O[0],
-  // TODO
-  // shape: getRandomShape();
-  x: 0,
-  y: 0,
-};
+const { combineReducers } = require('redux')
+const { MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT } = require('./actions')
+const { TETROMINOS } = require('./constants')
 
 function grid (state = initializeGridState(), action) {
   switch (action) {
@@ -43,15 +33,6 @@ function initializeGridState () {
   }
   return result
 };
-
-function combineReducers (reducers) {
-  return (state = {}, action) => {
-    return Object.keys(reducers).reduce((nextState, key) => {
-      nextState[key] = reducers[key](state[key], action)
-      return nextState
-    }, {})
-  }
-}
 
 module.exports = combineReducers({
   grid,

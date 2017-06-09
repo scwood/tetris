@@ -1,11 +1,17 @@
 {
   "scripts": {
     "build": "browserify src/index.js -o public/bundle.js",
-    "start": "watchify src/index.js -o public/bundle.js -v --debug"
+    "start": "watchify src/index.js -o public/bundle.js -v --debug",
+    "lint": "standard --fix"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
     "standard": "^10.0.2",
     "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   }
 }
