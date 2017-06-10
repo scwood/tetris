@@ -1,5 +1,5 @@
 const { BOARD, SQUARE, COLORS } = require('./constants')
-const { eachBlock } = require('./utils')
+const { forEachBlock } = require('./utils')
 
 const canvas = document.getElementById('game-canvas')
 const ctx = canvas.getContext('2d')
@@ -21,12 +21,12 @@ function drawGrid (state) {
 }
 
 function drawCurrentTetrimino (state) {
-  const { currentTetromino: { shape, x, y } } = state
-  drawTetromino(shape, x, y)
+  const { currentTetromino } = state
+  drawTetromino(currentTetromino)
 }
 
-function drawTetromino (shape, x, y) {
-  eachBlock(shape, x, y, (x, y) => {
+function drawTetromino (tetromino) {
+  forEachBlock(tetromino, (x, y) => {
     drawGridSquare(x, y, true)
   })
 }

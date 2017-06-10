@@ -1,19 +1,27 @@
 const { combineReducers } = require('redux')
-const { MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT } = require('./actions')
-const { TETROMINOS } = require('./constants')
+const { TETROMINOS, BOARD } = require('./constants')
+const { getRandomInt } = require('./utils')
+const {
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+  TURN_GRID_PIECE_ON,
+  ADD_NEW_TETROMINO
+} = require('./actions')
 
-function grid (state = initializeGridState(), action) {
-  switch (action) {
+function grid (state = initializeGrid(), action) {
+  switch (action.type) {
+    case TURN_GRID_PIECE_ON:
+      const { x, y } = action
+      const newGrid = cloneGrid(state)
+      newGrid[y][x] = true
+      return newGrid
     default:
       return state
   }
 }
 
-function currentTetromino (state = {
-  shape: TETROMINOS.O[0],
-  x: 0,
-  y: 0
-}, action) {
+function currentTetromino (state = initializeCurrentTetromino(), action) {
   switch (action.type) {
     case MOVE_LEFT:
       return Object.assign({}, state, { x: state.x - 1 })
@@ -21,18 +29,37 @@ function currentTetromino (state = {
       return Object.assign({}, state, { x: state.x + 1 })
     case MOVE_DOWN:
       return Object.assign({}, state, { y: state.y + 1 })
+    case ADD_NEW_TETROMINO:
+      return initializeCurrentTetromino()
     default:
       return state
   }
 }
 
-function initializeGridState () {
+function initializeGrid () {
   let result = []
   for (let i = 0; i < 20; i++) {
     result.push(new Array(10).fill(false))
   }
   return result
 };
+
+function initializeCurrentTetromino () {
+  const randomShape = getRandomInt(0, TETROMINOS.length)
+  const randomRotation = getRandomInt(0, 4)
+  const randomTetromino = TETROMINOS[randomShape][randomRotation]
+  return {
+    shape: randomTetromino,
+    x: (BOARD.WIDTH / 2) - 1,
+    y: 0
+  }
+}
+
+function cloneGrid (grid) {
+  return grid.map(row => {
+    return row.slice()
+  })
+}
 
 module.exports = combineReducers({
   grid,
