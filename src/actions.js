@@ -3,7 +3,7 @@ import { forEachBlock, everyBlock, someBlock } from './utils'
 
 export const ROTATE = 'ROTATE'
 export const CLEAR_ROWS = 'CLEAR_ROWS'
-export const TURN_GRID_PIECE_ON = 'TURN_GRID_PIECE_ON'
+export const SET_GRID_COLOR = 'SET_GRID_COLOR'
 export const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
 export const MOVE_DOWN = 'MOVE_DOWN'
 export const MOVE_LEFT = 'MOVE_LEFT'
@@ -55,7 +55,7 @@ function addTetrominoToGrid() {
   return (dispatch, getState) => {
     const { tetromino } = getState()
     forEachBlock(tetromino, (x, y) => {
-      dispatch({ type: TURN_GRID_PIECE_ON, x, y })
+      dispatch({ type: SET_GRID_COLOR, x, y, color: getColor(tetromino) })
     })
   }
 }
@@ -76,6 +76,10 @@ function getNextRotation(tetromino) {
   const oldIndex = rotations.indexOf(rotation)
   const newIndex = (oldIndex + 1) % rotations.length
   return rotations[newIndex]
+}
+
+function getColor(tetromino) {
+  return TETROMINOS[tetromino.name].color
 }
 
 function isValidPlacement (tetromino, grid) {
