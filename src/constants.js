@@ -3,7 +3,7 @@ export const BOARD = {
   WIDTH: 10
 }
 
-export const SQUARE = {
+export const BLOCK = {
   WIDTH: 30
 }
 

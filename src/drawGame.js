@@ -1,11 +1,11 @@
-import { BOARD, SQUARE, COLORS } from './constants'
+import { BOARD, BLOCK, COLORS } from './constants'
 import { forEachBlock } from './utils'
 
 const canvas = document.getElementById('game-canvas')
 const ctx = canvas.getContext('2d')
 
-canvas.height = BOARD.HEIGHT * SQUARE.WIDTH
-canvas.width = BOARD.WIDTH * SQUARE.WIDTH
+canvas.height = BOARD.HEIGHT * BLOCK.WIDTH
+canvas.width = BOARD.WIDTH * BLOCK.WIDTH
 
 export default function drawGame (state) {
   drawGrid(state)
@@ -33,7 +33,7 @@ function drawTetromino (tetromino) {
 
 function drawGridSquare (x, y, color) {
   color = color || COLORS.BLACK
-  drawSquare(x * SQUARE.WIDTH, y * SQUARE.WIDTH, SQUARE.WIDTH, color)
+  drawSquare(x * BLOCK.WIDTH, y * BLOCK.WIDTH, BLOCK.WIDTH, color)
 }
 
 function drawSquare (x, y, width, color) {

@@ -70,7 +70,7 @@ function initializeTetromino () {
   return {
     name: newTetrominoName,
     x: (BOARD.WIDTH / 2) - 2,
-    y: 0,
+    y: -1,
     color,
     rotation
   }
