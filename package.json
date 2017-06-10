@@ -1,12 +1,13 @@
 {
   "scripts": {
-    "build": "webpack",
-    "start": "webpack --watch --progress",
+    "build": "webpack -p",
+    "start": "webpack-dev-server",
     "lint": "standard --fix"
   },
   "devDependencies": {
     "standard": "^10.0.2",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
     "redux": "^3.6.0",

@@ -41,6 +41,5 @@ function drawSquare (x, y, width, color) {
   ctx.rect(x, y, width, width)
   ctx.fillStyle = color
   ctx.fill()
-  ctx.stroke()
   ctx.closePath()
 }
