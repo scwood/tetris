@@ -21,8 +21,8 @@ function drawGrid (state) {
 }
 
 function drawCurrentTetrimino (state) {
-  const { currentTetromino } = state
-  drawTetromino(currentTetromino)
+  const { tetromino } = state
+  drawTetromino(tetromino)
 }
 
 function drawTetromino (tetromino) {

@@ -21,7 +21,7 @@ function grid (state = initializeGrid(), action) {
   }
 }
 
-function currentTetromino (state = initializeCurrentTetromino(), action) {
+function tetromino (state = initializeTetromino(), action) {
   switch (action.type) {
     case MOVE_LEFT:
       return Object.assign({}, state, { x: state.x - 1 })
@@ -30,7 +30,7 @@ function currentTetromino (state = initializeCurrentTetromino(), action) {
     case MOVE_DOWN:
       return Object.assign({}, state, { y: state.y + 1 })
     case ADD_NEW_TETROMINO:
-      return initializeCurrentTetromino()
+      return initializeTetromino()
     default:
       return state
   }
@@ -44,7 +44,7 @@ function initializeGrid () {
   return result
 };
 
-function initializeCurrentTetromino () {
+function initializeTetromino () {
   const randomShape = getRandomInt(0, TETROMINOS.length)
   const randomRotation = getRandomInt(0, 4)
   const randomTetromino = TETROMINOS[randomShape][randomRotation]
@@ -63,5 +63,5 @@ function cloneGrid (grid) {
 
 export default combineReducers({
   grid,
-  currentTetromino
+  tetromino
 })
