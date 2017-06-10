@@ -6,7 +6,8 @@ import {
   MOVE_LEFT,
   MOVE_RIGHT,
   TURN_GRID_PIECE_ON,
-  ADD_NEW_TETROMINO
+  ADD_NEW_TETROMINO,
+  ROTATE
 } from './actions'
 
 function grid (state = initializeGrid(), action) {
@@ -24,13 +25,15 @@ function grid (state = initializeGrid(), action) {
 function tetromino (state = initializeTetromino(), action) {
   switch (action.type) {
     case MOVE_LEFT:
-      return Object.assign({}, state, { x: state.x - 1 })
+      return {...state, x: state.x - 1 }
     case MOVE_RIGHT:
-      return Object.assign({}, state, { x: state.x + 1 })
+      return {...state, x: state.x + 1 }
     case MOVE_DOWN:
-      return Object.assign({}, state, { y: state.y + 1 })
+      return {...state, y: state.y + 1 }
     case ADD_NEW_TETROMINO:
       return initializeTetromino()
+    case ROTATE:
+      return {...state, rotation: action.rotation }
     default:
       return state
   }
@@ -45,20 +48,21 @@ function initializeGrid () {
 };
 
 function initializeTetromino () {
-  const randomShape = getRandomInt(0, TETROMINOS.length)
-  const randomRotation = getRandomInt(0, 4)
-  const randomTetromino = TETROMINOS[randomShape][randomRotation]
+  const tetrominoNames = Object.keys(TETROMINOS)
+  const index = getRandomInt(0, tetrominoNames.length - 1)
+  const newTetrominoName = tetrominoNames[index]
+  const newTetromino = TETROMINOS[newTetrominoName]
+  const rotation = newTetromino.rotations[0]
   return {
-    shape: randomTetromino,
-    x: (BOARD.WIDTH / 2) - 1,
-    y: 0
+    name: newTetrominoName,
+    x: (BOARD.WIDTH / 2) - 2,
+    y: 0,
+    rotation
   }
 }
 
 function cloneGrid (grid) {
-  return grid.map(row => {
-    return row.slice()
-  })
+  return grid.map(row => row.slice()) 
 }
 
 export default combineReducers({

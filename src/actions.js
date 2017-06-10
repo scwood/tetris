@@ -1,4 +1,4 @@
-import { BOARD } from './constants'
+import { BOARD, TETROMINOS } from './constants'
 import { forEachBlock, everyBlock, someBlock } from './utils'
 
 export const ROTATE = 'ROTATE'
@@ -8,7 +8,7 @@ export const MOVE_DOWN = 'MOVE_DOWN'
 export const MOVE_LEFT = 'MOVE_LEFT'
 export const MOVE_RIGHT = 'MOVE_RIGHT'
 
-export function attemptToMoveDown () {
+export function moveDown () {
   return (dispatch, getState) => {
     const { tetromino, grid } = getState()
     if (!isValidPlacement({...tetromino, y: tetromino.y + 1}, grid)) {
@@ -26,7 +26,7 @@ export function attemptToMoveDown () {
   }
 }
 
-export function attemptToMoveRight () {
+export function moveRight () {
   return (dispatch, getState) => {
     const { tetromino, grid } = getState()
     if (isValidPlacement({ ...tetromino, x: tetromino.x + 1 }, grid)) {
@@ -35,13 +35,29 @@ export function attemptToMoveRight () {
   }
 }
 
-export function attemptToMoveLeft () {
+export function moveLeft () {
   return (dispatch, getState) => {
     const { tetromino, grid } = getState()
     if (isValidPlacement({ ...tetromino, x: tetromino.x - 1 }, grid)) {
       dispatch({ type: MOVE_LEFT })
     }
   }
+}
+
+export function rotate() {
+  return (dispatch, getState) => {
+    const { tetromino } = getState()
+    const newRotation = getNextRotation(tetromino)
+    dispatch({ type: ROTATE, rotation: newRotation })
+  }
+}
+
+function getNextRotation(tetromino) {
+  const { name, rotation } = tetromino
+  const { rotations } = TETROMINOS[name]
+  const oldIndex = rotations.indexOf(rotation)
+  const newIndex = (oldIndex + 1) % rotations.length
+  return rotations[newIndex]
 }
 
 function isValidPlacement (tetromino, grid) {
@@ -61,11 +77,6 @@ function isValidPlacement (tetromino, grid) {
 
 function hasHitBottom (tetromino, grid) {
   return someBlock(tetromino, (x, y) => {
-    if (y === BOARD.HEIGHT - 1) {
-      return true
-    }
-    if (grid[y + 1][x]) {
-      return true
-    }
+    return y === BOARD.HEIGHT - 1 || grid[y + 1][x]
   })
 }
