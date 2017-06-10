@@ -12,7 +12,7 @@ store.subscribe(() => {
 
 setInterval(() => {
   dispatch(moveDown())
-}, 400)
+}, 200)
 
 drawGame(store.getState())
 
