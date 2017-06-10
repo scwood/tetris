@@ -1,4 +1,5 @@
 const path = require('path')
+const objectRestSpread = require('babel-plugin-transform-object-rest-spread')
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -18,7 +19,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env']
+            presets: ['env'],
+            plugins: [objectRestSpread]
           }
         }
       }
