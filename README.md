@@ -1,4 +1,4 @@
-```
+```bash
 git clone https://github.com/scwood/tetris
 cd tetris
 yarn
