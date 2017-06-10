@@ -32,7 +32,7 @@ function drawTetromino (tetromino) {
 }
 
 function drawGridSquare (x, y, color) {
-  color = color ? color : COLORS.BLACK
+  color = color || COLORS.BLACK
   drawSquare(x * SQUARE.WIDTH, y * SQUARE.WIDTH, SQUARE.WIDTH, color)
 }
 

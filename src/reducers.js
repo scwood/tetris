@@ -35,15 +35,15 @@ function grid (state = initializeGrid(), action) {
 function tetromino (state = initializeTetromino(), action) {
   switch (action.type) {
     case MOVE_LEFT:
-      return {...state, x: state.x - 1 }
+      return { ...state, x: state.x - 1 }
     case MOVE_RIGHT:
-      return {...state, x: state.x + 1 }
+      return { ...state, x: state.x + 1 }
     case MOVE_DOWN:
-      return {...state, y: state.y + 1 }
+      return { ...state, y: state.y + 1 }
     case ADD_NEW_TETROMINO:
       return initializeTetromino()
     case ROTATE:
-      return {...state, rotation: action.rotation }
+      return { ...state, rotation: action.rotation }
     default:
       return state
   }

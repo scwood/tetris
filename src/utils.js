@@ -10,8 +10,8 @@ export function someBlock (tetromino, fn) {
   return generateBlocks(tetromino).some(args => fn(...args))
 }
 
-export function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+export function getRandomInt (min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 export function clone2DArray (arr) {

@@ -12,16 +12,16 @@ export const MOVE_RIGHT = 'MOVE_RIGHT'
 export function moveDown () {
   return (dispatch, getState) => {
     const { tetromino, grid } = getState()
+    if (hasHitBottom(tetromino, grid)) {
+      dispatch(addTetrominoToGrid())
+      dispatch(clearCompletedRows())
+      dispatch({ type: ADD_NEW_TETROMINO })
+      return
+    }
     if (!isValidPlacement({...tetromino, y: tetromino.y + 1}, grid)) {
       return
     }
     dispatch({ type: MOVE_DOWN })
-    const newTetromino = getState().tetromino
-    if (hasHitBottom(newTetromino, grid)) {
-      dispatch(addTetrominoToGrid())
-      dispatch(clearCompletedRows())
-      dispatch({ type: ADD_NEW_TETROMINO })
-    }
   }
 }
 
@@ -43,7 +43,7 @@ export function moveLeft () {
   }
 }
 
-export function rotate() {
+export function rotate () {
   return (dispatch, getState) => {
     const { tetromino } = getState()
     const newRotation = getNextRotation(tetromino)
@@ -51,7 +51,7 @@ export function rotate() {
   }
 }
 
-function addTetrominoToGrid() {
+function addTetrominoToGrid () {
   return (dispatch, getState) => {
     const { tetromino } = getState()
     forEachBlock(tetromino, (x, y) => {
@@ -60,7 +60,7 @@ function addTetrominoToGrid() {
   }
 }
 
-function clearCompletedRows() {
+function clearCompletedRows () {
   return (dispatch, getState) => {
     const { grid } = getState()
     const rowsToClear = grid.map((row, i) => i).filter(i => {
@@ -70,7 +70,7 @@ function clearCompletedRows() {
   }
 }
 
-function getNextRotation(tetromino) {
+function getNextRotation (tetromino) {
   const { name, rotation } = tetromino
   const { rotations } = TETROMINOS[name]
   const oldIndex = rotations.indexOf(rotation)
@@ -78,7 +78,7 @@ function getNextRotation(tetromino) {
   return rotations[newIndex]
 }
 
-function getColor(tetromino) {
+function getColor (tetromino) {
   return TETROMINOS[tetromino.name].color
 }
 

@@ -7,8 +7,8 @@ export const SQUARE = {
   WIDTH: 30
 }
 
-export const  COLORS = {
-  BLACK: '#232C31',
+export const COLORS = {
+  BLACK: '#232C31'
 }
 
 export const TETROMINOS = {

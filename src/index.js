@@ -1,5 +1,5 @@
-import configureStore from  './configureStore'
-import drawGame from  './drawGame'
+import configureStore from './configureStore'
+import drawGame from './drawGame'
 import { KEY } from './constants'
 import { moveLeft, moveRight, moveDown, rotate } from './actions'
 
