@@ -1,5 +1,5 @@
-const { BOARD, SQUARE, COLORS } = require('./constants')
-const { forEachBlock } = require('./utils')
+import { BOARD, SQUARE, COLORS } from './constants'
+import { forEachBlock } from './utils'
 
 const canvas = document.getElementById('game-canvas')
 const ctx = canvas.getContext('2d')
@@ -7,7 +7,7 @@ const ctx = canvas.getContext('2d')
 canvas.height = BOARD.HEIGHT * SQUARE.WIDTH
 canvas.width = BOARD.WIDTH * SQUARE.WIDTH
 
-module.exports = function drawGame (state) {
+export default function drawGame (state) {
   drawGrid(state)
   drawCurrentTetrimino(state)
 }

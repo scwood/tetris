@@ -1,13 +1,13 @@
-const { combineReducers } = require('redux')
-const { TETROMINOS, BOARD } = require('./constants')
-const { getRandomInt } = require('./utils')
-const {
+import { combineReducers } from 'redux'
+import { TETROMINOS, BOARD } from './constants'
+import { getRandomInt } from './utils'
+import {
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
   TURN_GRID_PIECE_ON,
   ADD_NEW_TETROMINO
-} = require('./actions')
+} from './actions'
 
 function grid (state = initializeGrid(), action) {
   switch (action.type) {
@@ -61,7 +61,7 @@ function cloneGrid (grid) {
   })
 }
 
-module.exports = combineReducers({
+export default combineReducers({
   grid,
   currentTetromino
 })

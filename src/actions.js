@@ -1,13 +1,13 @@
-const { BOARD } = require('./constants')
-const { forEachBlock, everyBlock, someBlock } = require('./utils')
+import { BOARD } from './constants'
+import { forEachBlock, everyBlock, someBlock } from './utils'
 
-const TURN_GRID_PIECE_ON = 'TURN_GRID_PIECE_ON'
-const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
-const MOVE_DOWN = 'MOVE_DOWN'
-const MOVE_LEFT = 'MOVE_LEFT'
-const MOVE_RIGHT = 'MOVE_RIGHT'
+export const TURN_GRID_PIECE_ON = 'TURN_GRID_PIECE_ON'
+export const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
+export const MOVE_DOWN = 'MOVE_DOWN'
+export const MOVE_LEFT = 'MOVE_LEFT'
+export const MOVE_RIGHT = 'MOVE_RIGHT'
 
-function attemptToMoveDown () {
+export function attemptToMoveDown () {
   return (dispatch, getState) => {
     const { currentTetromino: { shape, x, y } } = getState()
     if (!isValidPlacement({ shape, x, y: y + 1 })) {
@@ -25,7 +25,7 @@ function attemptToMoveDown () {
   }
 }
 
-function attemptToMoveRight () {
+export function attemptToMoveRight () {
   return (dispatch, getState) => {
     const { currentTetromino: { shape, x, y } } = getState()
     if (isValidPlacement({ shape, x: x + 1, y })) {
@@ -34,7 +34,7 @@ function attemptToMoveRight () {
   }
 }
 
-function attemptToMoveLeft () {
+export function attemptToMoveLeft () {
   return (dispatch, getState) => {
     const { currentTetromino: { shape, x, y } } = getState()
     if (isValidPlacement({ shape, x: x - 1, y })) {
@@ -61,15 +61,4 @@ function hasHitBottom (tetromino) {
       return true
     }
   })
-}
-
-module.exports = {
-  ADD_NEW_TETROMINO,
-  TURN_GRID_PIECE_ON,
-  MOVE_LEFT,
-  MOVE_RIGHT,
-  MOVE_DOWN,
-  attemptToMoveLeft,
-  attemptToMoveRight,
-  attemptToMoveDown
 }

@@ -1,11 +1,9 @@
-const configureStore = require('./configureStore')
-const drawGame = require('./drawGame')
-const { KEY } = require('./constants')
-const {
-  attemptToMoveLeft,
-  attemptToMoveRight,
-  attemptToMoveDown
-} = require('./actions')
+import configureStore from  './configureStore'
+import drawGame from  './drawGame'
+import { KEY } from './constants'
+import {
+  attemptToMoveLeft, attemptToMoveRight, attemptToMoveDown
+} from './actions'
 
 const store = configureStore()
 const { dispatch } = store
