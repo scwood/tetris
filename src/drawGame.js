@@ -14,8 +14,8 @@ export default function drawGame (state) {
 
 function drawGrid (state) {
   state.grid.forEach((row, y) => {
-    row.forEach((filled, x) => {
-      drawGridSquare(x, y, filled)
+    row.forEach((color, x) => {
+      drawGridSquare(x, y, color)
     })
   })
 }
@@ -27,12 +27,12 @@ function drawCurrentTetrimino (state) {
 
 function drawTetromino (tetromino) {
   forEachBlock(tetromino, (x, y) => {
-    drawGridSquare(x, y, true)
+    drawGridSquare(x, y, tetromino.color)
   })
 }
 
-function drawGridSquare (x, y, filled) {
-  const color = filled ? COLORS.BLACK : COLORS.GREY
+function drawGridSquare (x, y, color) {
+  color = color ? color : COLORS.BLACK
   drawSquare(x * SQUARE.WIDTH, y * SQUARE.WIDTH, SQUARE.WIDTH, color)
 }
 

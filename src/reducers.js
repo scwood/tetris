@@ -5,7 +5,7 @@ import {
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
-  TURN_GRID_PIECE_ON,
+  SET_GRID_COLOR,
   ADD_NEW_TETROMINO,
   ROTATE,
   CLEAR_ROWS
@@ -14,10 +14,10 @@ import {
 function grid (state = initializeGrid(), action) {
   let newGrid
   switch (action.type) {
-    case TURN_GRID_PIECE_ON:
-      const { x, y } = action
+    case SET_GRID_COLOR:
+      const { x, y, color } = action
       newGrid = clone2DArray(state)
-      newGrid[y][x] = true
+      newGrid[y][x] = color
       return newGrid
     case CLEAR_ROWS:
       const { rowsToClear } = action
@@ -65,12 +65,13 @@ function initializeTetromino () {
   const tetrominoNames = Object.keys(TETROMINOS)
   const index = getRandomInt(0, tetrominoNames.length - 1)
   const newTetrominoName = tetrominoNames[index]
-  const newTetromino = TETROMINOS[newTetrominoName]
-  const rotation = newTetromino.rotations[0]
+  const { rotations, color } = TETROMINOS[newTetrominoName]
+  const rotation = rotations[0]
   return {
     name: newTetrominoName,
     x: (BOARD.WIDTH / 2) - 2,
     y: 0,
+    color,
     rotation
   }
 }
