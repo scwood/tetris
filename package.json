@@ -1,13 +1,12 @@
 {
   "scripts": {
-    "build": "browserify src/index.js -o public/bundle.js",
-    "start": "watchify src/index.js -o public/bundle.js -v --debug",
+    "build": "webpack",
+    "start": "webpack --watch --progress",
     "lint": "standard --fix"
   },
   "devDependencies": {
-    "browserify": "^14.4.0",
     "standard": "^10.0.2",
-    "watchify": "^3.9.0"
+    "webpack": "^2.6.1"
   },
   "dependencies": {
     "redux": "^3.6.0",
