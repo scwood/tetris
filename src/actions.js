@@ -2,6 +2,7 @@ import { BOARD, TETROMINOS } from './constants'
 import { forEachBlock, everyBlock, someBlock } from './utils'
 
 export const ROTATE = 'ROTATE'
+export const CLEAR_ROWS = 'CLEAR_ROWS'
 export const TURN_GRID_PIECE_ON = 'TURN_GRID_PIECE_ON'
 export const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
 export const MOVE_DOWN = 'MOVE_DOWN'
@@ -16,13 +17,11 @@ export function moveDown () {
     }
     dispatch({ type: MOVE_DOWN })
     const newTetromino = getState().tetromino
-    if (!hasHitBottom(newTetromino, grid)) {
-      return
+    if (hasHitBottom(newTetromino, grid)) {
+      dispatch(addTetrominoToGrid())
+      dispatch(clearCompletedRows())
+      dispatch({ type: ADD_NEW_TETROMINO })
     }
-    forEachBlock(newTetromino, (x, y) => {
-      dispatch({ type: TURN_GRID_PIECE_ON, x, y })
-    })
-    dispatch({ type: ADD_NEW_TETROMINO })
   }
 }
 
@@ -49,6 +48,25 @@ export function rotate() {
     const { tetromino } = getState()
     const newRotation = getNextRotation(tetromino)
     dispatch({ type: ROTATE, rotation: newRotation })
+  }
+}
+
+function addTetrominoToGrid() {
+  return (dispatch, getState) => {
+    const { tetromino } = getState()
+    forEachBlock(tetromino, (x, y) => {
+      dispatch({ type: TURN_GRID_PIECE_ON, x, y })
+    })
+  }
+}
+
+function clearCompletedRows() {
+  return (dispatch, getState) => {
+    const { grid } = getState()
+    const rowsToClear = grid.map((row, i) => i).filter(i => {
+      return grid[i].every(x => x)
+    })
+    dispatch({ type: CLEAR_ROWS, rowsToClear })
   }
 }
 

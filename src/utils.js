@@ -14,6 +14,10 @@ export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+export function clone2DArray (arr) {
+  return arr.map(row => row.slice())
+}
+
 function generateBlocks ({ rotation, x, y }) {
   const blocks = []
   let row = 0
