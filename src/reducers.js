@@ -1,22 +1,32 @@
 import { combineReducers } from 'redux'
 import { TETROMINOS, BOARD } from './constants'
-import { getRandomInt } from './utils'
+import { getRandomInt, clone2DArray } from './utils'
 import {
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
   TURN_GRID_PIECE_ON,
   ADD_NEW_TETROMINO,
-  ROTATE
+  ROTATE,
+  CLEAR_ROWS
 } from './actions'
 
 function grid (state = initializeGrid(), action) {
+  let newGrid
   switch (action.type) {
     case TURN_GRID_PIECE_ON:
       const { x, y } = action
-      const newGrid = cloneGrid(state)
+      newGrid = clone2DArray(state)
       newGrid[y][x] = true
       return newGrid
+    case CLEAR_ROWS:
+      const { rowsToClear } = action
+      newGrid = clone2DArray(state).filter((row, i) => {
+        return rowsToClear.indexOf(i) === -1
+      })
+      return rowsToClear.map(() => {
+        return initializeGridRow()
+      }).concat(newGrid)
     default:
       return state
   }
@@ -42,10 +52,14 @@ function tetromino (state = initializeTetromino(), action) {
 function initializeGrid () {
   let result = []
   for (let i = 0; i < 20; i++) {
-    result.push(new Array(10).fill(false))
+    result.push(initializeGridRow())
   }
   return result
-};
+}
+
+function initializeGridRow () {
+  return new Array(10).fill(false)
+}
 
 function initializeTetromino () {
   const tetrominoNames = Object.keys(TETROMINOS)
@@ -59,10 +73,6 @@ function initializeTetromino () {
     y: 0,
     rotation
   }
-}
-
-function cloneGrid (grid) {
-  return grid.map(row => row.slice()) 
 }
 
 export default combineReducers({
