@@ -2,7 +2,7 @@ import WebFont from 'webfontloader'
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { moveLeft, moveRight, moveDown, rotate, startGame } from './actions'
+import * as actions from './actions'
 
 const store = configureStore()
 const { dispatch } = store
@@ -22,32 +22,37 @@ function start () {
   drawGame(store.getState())
   setInterval(() => {
     if (store.getState().gameInfo.started) {
-      dispatch(moveDown())
+      dispatch(actions.moveDown())
     }
   }, 200)
 }
 
-document.addEventListener('keydown', handleKeydown)
-
 function handleKeydown (e) {
   if (!store.getState().gameInfo.started) {
     if (e.keyCode === KEY.SPACE) {
-      dispatch(startGame())
+      dispatch(actions.startGame())
     }
     return
   }
   switch (e.keyCode) {
     case KEY.LEFT:
-      dispatch(moveLeft())
+      dispatch(actions.moveLeft())
       break
     case KEY.RIGHT:
-      dispatch(moveRight())
+      dispatch(actions.moveRight())
       break
     case KEY.DOWN:
-      dispatch(moveDown())
+      dispatch(actions.moveDown())
       break
     case KEY.UP:
-      dispatch(rotate())
+      dispatch(actions.rotate())
       break
   }
 }
+
+function handleResize () {
+  dispatch(actions.resizeBlock())
+}
+
+window.onresize = handleResize
+document.addEventListener('keydown', handleKeydown)

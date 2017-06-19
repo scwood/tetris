@@ -10,6 +10,7 @@ export const MOVE_LEFT = 'MOVE_LEFT'
 export const MOVE_RIGHT = 'MOVE_RIGHT'
 export const START_GAME = 'START_GAME'
 export const END_GAME = 'END_GAME'
+export const RESIZE_BLOCK = 'RESIZE_BLOCK'
 
 export function moveDown () {
   return (dispatch, getState) => {
@@ -57,6 +58,11 @@ export function rotate () {
       dispatch({ type: ROTATE, rotation: newRotation })
     }
   }
+}
+
+export function resizeBlock () {
+  const height = window.innerHeight - 20
+  return { type: RESIZE_BLOCK, size: height / 20 }
 }
 
 export function startGame () {

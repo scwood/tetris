@@ -1,14 +1,19 @@
-import { BOARD, BLOCK, COLORS } from './constants'
+import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
 
-const canvas = createHiResolutionCanvas(BOARD.WIDTH * BLOCK.WIDTH,
-  BOARD.HEIGHT * BLOCK.WIDTH)
-document.body.appendChild(canvas)
+const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
-ctx.font = '1em "Roboto Mono", monospace'
-ctx.strokeStyle = COLORS.BLACK
+document.body.appendChild(canvas)
+
+let blockSize
+scaleCanvas(canvas)
+
+window.onresize = () => {
+  scaleCanvas(canvas)
+}
 
 export default function drawGame (state) {
+  scaleCanvas(canvas)
   drawGrid(state)
   if (state.gameInfo.started) {
     drawCurrentTetrimino(state)
@@ -19,10 +24,11 @@ export default function drawGame (state) {
 
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
-  ctx.fillText('Press <space> to start', 40,
-    (BOARD.HEIGHT * BLOCK.WIDTH) / 2 - 20)
+  ctx.fillText('Press <space> to start', blockSize * 1.5,
+    (BOARD.HEIGHT * blockSize) / 2 - 20)
   if (state.gameInfo.gameOver) {
-    ctx.fillText('Game over', 100, (BOARD.HEIGHT * BLOCK.WIDTH) / 4 - 20)
+    ctx.fillText('Game over', blockSize * 3.4,
+      (BOARD.HEIGHT * blockSize) / 4)
   }
 }
 
@@ -43,7 +49,7 @@ function drawCurrentTetrimino (state) {
 
 function drawGridSquare (x, y, color) {
   color = color || COLORS.LIGHT_GRAY
-  drawSquare(x * BLOCK.WIDTH, y * BLOCK.WIDTH, BLOCK.WIDTH, color)
+  drawSquare(x * blockSize, y * blockSize, blockSize, color)
 }
 
 function drawSquare (x, y, width, color) {
@@ -51,7 +57,7 @@ function drawSquare (x, y, width, color) {
   ctx.rect(x, y, width, width)
   ctx.fillStyle = color
   ctx.strokeStyle = COLORS.LIGHT_GRAY
-  ctx.lineWidth = 2
+  ctx.lineWidth = blockSize / 10
   ctx.fill()
   ctx.stroke()
   ctx.closePath()
@@ -68,13 +74,15 @@ function getPixelRatio () {
   return dpr / bsr
 }
 
-function createHiResolutionCanvas (width, height) {
+function scaleCanvas (canvas) {
+  const width = window.innerWidth - 20 // -20 to accommodate window padding
+  const height = window.innerHeight - 20
   const ratio = getPixelRatio()
-  const canvas = document.createElement('canvas')
   canvas.width = width * ratio
   canvas.height = height * ratio
   canvas.style.width = width + 'px'
   canvas.style.height = height + 'px'
   canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0)
-  return canvas
+  blockSize = height / 20
+  ctx.font = `${blockSize / 2}px "Roboto Mono", monospace`
 }
