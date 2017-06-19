@@ -51,9 +51,11 @@ export function moveLeft () {
 
 export function rotate () {
   return (dispatch, getState) => {
-    const { tetromino } = getState()
+    const { tetromino, grid } = getState()
     const newRotation = getNextRotation(tetromino)
-    dispatch({ type: ROTATE, rotation: newRotation })
+    if (isValidPlacement({ ...tetromino, rotation: newRotation }, grid)) {
+      dispatch({ type: ROTATE, rotation: newRotation })
+    }
   }
 }
 
