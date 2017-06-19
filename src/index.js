@@ -4,9 +4,6 @@ import drawGame from './drawGame'
 import { KEY } from './constants'
 import * as actions from './actions'
 
-const store = configureStore()
-const { dispatch } = store
-
 WebFont.load({
   google: {
     families: ['Roboto Mono']
@@ -14,12 +11,15 @@ WebFont.load({
   active: start
 })
 
+const store = configureStore()
+const { dispatch } = store
+
 function start () {
   store.subscribe(() => {
     drawGame(store.getState())
   })
 
-  dispatch(actions.resizeGame())
+  handleResize()
 
   setInterval(() => {
     if (store.getState().gameInfo.started) {
