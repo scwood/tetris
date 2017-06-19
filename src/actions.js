@@ -102,13 +102,13 @@ function getColor (tetromino) {
 
 function isValidPlacement (tetromino, grid) {
   return everyBlock(tetromino, (x, y) => {
-    if (grid[y][x]) {
-      return false
-    }
     if (x < 0 || x > BOARD.WIDTH - 1) {
       return false
     }
     if (y < 0 || y > BOARD.HEIGHT - 1) {
+      return false
+    }
+    if (grid[y][x]) {
       return false
     }
     return true
