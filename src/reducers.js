@@ -8,7 +8,9 @@ import {
   SET_GRID_COLOR,
   ADD_NEW_TETROMINO,
   ROTATE,
-  CLEAR_ROWS
+  CLEAR_ROWS,
+  START_GAME,
+  END_GAME
 } from './actions'
 
 function grid (state = initializeGrid(), action) {
@@ -27,6 +29,8 @@ function grid (state = initializeGrid(), action) {
       return rowsToClear.map(() => {
         return initializeGridRow()
       }).concat(newGrid)
+    case END_GAME:
+      return initializeGrid()
     default:
       return state
   }
@@ -44,6 +48,17 @@ function tetromino (state = initializeTetromino(), action) {
       return initializeTetromino()
     case ROTATE:
       return { ...state, rotation: action.rotation }
+    default:
+      return state
+  }
+}
+
+function gameInfo (state = initializeGameInfo(), action) {
+  switch (action.type) {
+    case START_GAME:
+      return { started: true, gameOver: false }
+    case END_GAME:
+      return { started: false, gameOver: true }
     default:
       return state
   }
@@ -76,7 +91,12 @@ function initializeTetromino () {
   }
 }
 
+function initializeGameInfo () {
+  return { started: false, gameOver: false }
+}
+
 export default combineReducers({
   grid,
-  tetromino
+  tetromino,
+  gameInfo
 })

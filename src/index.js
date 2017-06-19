@@ -1,7 +1,8 @@
+import WebFont from 'webfontloader'
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { moveLeft, moveRight, moveDown, rotate } from './actions'
+import { moveLeft, moveRight, moveDown, rotate, startGame } from './actions'
 
 const store = configureStore()
 const { dispatch } = store
@@ -10,15 +11,31 @@ store.subscribe(() => {
   drawGame(store.getState())
 })
 
-setInterval(() => {
-  dispatch(moveDown())
-}, 200)
+WebFont.load({
+  google: {
+    families: ['Roboto Mono']
+  },
+  active: start
+})
 
-drawGame(store.getState())
+function start () {
+  drawGame(store.getState())
+  setInterval(() => {
+    if (store.getState().gameInfo.started) {
+      dispatch(moveDown())
+    }
+  }, 200)
+}
 
 document.addEventListener('keydown', handleKeydown)
 
 function handleKeydown (e) {
+  if (!store.getState().gameInfo.started) {
+    if (e.keyCode === KEY.SPACE) {
+      dispatch(startGame())
+    }
+    return
+  }
   switch (e.keyCode) {
     case KEY.LEFT:
       dispatch(moveLeft())
@@ -31,5 +48,6 @@ function handleKeydown (e) {
       break
     case KEY.UP:
       dispatch(rotate())
+      break
   }
 }

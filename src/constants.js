@@ -8,7 +8,7 @@ export const BLOCK = {
 }
 
 export const COLORS = {
-  BLACK: '#232C31'
+  BG: '#EEE'
 }
 
 export const TETROMINOS = {
