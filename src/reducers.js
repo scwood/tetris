@@ -11,7 +11,7 @@ import {
   CLEAR_ROWS,
   START_GAME,
   END_GAME,
-  RESIZE_BLOCK
+  RESIZE_GAME
 } from './actions'
 
 function grid (state = initializeGrid(), action) {
@@ -60,8 +60,8 @@ function gameInfo (state = initializeGameInfo(), action) {
       return { ...state, started: true, gameOver: false }
     case END_GAME:
       return { ...state, started: false, gameOver: true }
-    case RESIZE_BLOCK:
-      return { ...state, blockSize: action.size}
+    case RESIZE_GAME:
+      return { ...state, width: action.width, height: action.height }
     default:
       return state
   }
@@ -95,7 +95,12 @@ function initializeTetromino () {
 }
 
 function initializeGameInfo () {
-  return { started: false, gameOver: false }
+  return {
+    started: false,
+    gameOver: false,
+    width: 0,
+    height: 0
+  }
 }
 
 export default combineReducers({

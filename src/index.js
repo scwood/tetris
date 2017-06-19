@@ -19,6 +19,7 @@ WebFont.load({
 })
 
 function start () {
+  dispatch(actions.resizeGame())
   drawGame(store.getState())
   setInterval(() => {
     if (store.getState().gameInfo.started) {
@@ -51,7 +52,7 @@ function handleKeydown (e) {
 }
 
 function handleResize () {
-  dispatch(actions.resizeBlock())
+  dispatch(actions.resizeGame())
 }
 
 window.onresize = handleResize
