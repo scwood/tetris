@@ -8,11 +8,17 @@ export const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
 export const MOVE_DOWN = 'MOVE_DOWN'
 export const MOVE_LEFT = 'MOVE_LEFT'
 export const MOVE_RIGHT = 'MOVE_RIGHT'
+export const START_GAME = 'START_GAME'
+export const END_GAME = 'END_GAME'
 
 export function moveDown () {
   return (dispatch, getState) => {
     const { tetromino, grid } = getState()
     if (hasHitBottom(tetromino, grid)) {
+      if (hasHitTop(tetromino, grid)) {
+        dispatch({ type: END_GAME })
+        return
+      }
       dispatch(addTetrominoToGrid())
       dispatch(clearCompletedRows())
       dispatch({ type: ADD_NEW_TETROMINO })
@@ -49,6 +55,10 @@ export function rotate () {
     const newRotation = getNextRotation(tetromino)
     dispatch({ type: ROTATE, rotation: newRotation })
   }
+}
+
+export function startGame () {
+  return { type: START_GAME }
 }
 
 function addTetrominoToGrid () {
@@ -100,5 +110,11 @@ function isValidPlacement (tetromino, grid) {
 function hasHitBottom (tetromino, grid) {
   return someBlock(tetromino, (x, y) => {
     return y === BOARD.HEIGHT - 1 || grid[y + 1][x]
+  })
+}
+
+function hasHitTop (tetromino, grid) {
+  return someBlock(tetromino, (x, y) => {
+    return y <= 0
   })
 }
