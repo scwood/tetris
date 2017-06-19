@@ -8,10 +8,6 @@ document.body.appendChild(canvas)
 let blockSize
 scaleCanvas(canvas)
 
-window.onresize = () => {
-  scaleCanvas(canvas)
-}
-
 export default function drawGame (state) {
   scaleCanvas(canvas)
   drawGrid(state)
