@@ -10,7 +10,8 @@ import {
   ROTATE,
   CLEAR_ROWS,
   START_GAME,
-  END_GAME
+  END_GAME,
+  RESIZE_BLOCK
 } from './actions'
 
 function grid (state = initializeGrid(), action) {
@@ -56,9 +57,11 @@ function tetromino (state = initializeTetromino(), action) {
 function gameInfo (state = initializeGameInfo(), action) {
   switch (action.type) {
     case START_GAME:
-      return { started: true, gameOver: false }
+      return { ...state, started: true, gameOver: false }
     case END_GAME:
-      return { started: false, gameOver: true }
+      return { ...state, started: false, gameOver: true }
+    case RESIZE_BLOCK:
+      return { ...state, blockSize: action.size}
     default:
       return state
   }

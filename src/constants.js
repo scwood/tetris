@@ -3,10 +3,6 @@ export const BOARD = {
   WIDTH: 10
 }
 
-export const BLOCK = {
-  WIDTH: 30
-}
-
 export const COLORS = {
   LIGHT_GRAY: '#eeeeee',
   DARK_GRAY: '#999999',
