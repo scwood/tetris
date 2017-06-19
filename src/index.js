@@ -8,7 +8,8 @@ WebFont.load({
   google: {
     families: ['Roboto Mono']
   },
-  active: start
+  active: start,
+  inactive: start
 })
 
 const store = configureStore()
