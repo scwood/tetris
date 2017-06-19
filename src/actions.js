@@ -15,7 +15,7 @@ export function moveDown () {
   return (dispatch, getState) => {
     const { tetromino, grid } = getState()
     if (hasHitBottom(tetromino, grid)) {
-      if (hasHitTop(tetromino, grid)) {
+      if (hasHitTop(tetromino)) {
         dispatch({ type: END_GAME })
         return
       }
@@ -113,7 +113,7 @@ function hasHitBottom (tetromino, grid) {
   })
 }
 
-function hasHitTop (tetromino, grid) {
+function hasHitTop (tetromino) {
   return someBlock(tetromino, (x, y) => {
     return y <= 0
   })

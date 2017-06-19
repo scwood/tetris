@@ -1,10 +1,12 @@
 import { BOARD, BLOCK, COLORS } from './constants'
 import { forEachBlock } from './utils'
 
-const canvas = createHiResolutionCanvas(BOARD.WIDTH * BLOCK.WIDTH, BOARD.HEIGHT * BLOCK.WIDTH)
+const canvas = createHiResolutionCanvas(BOARD.WIDTH * BLOCK.WIDTH,
+  BOARD.HEIGHT * BLOCK.WIDTH)
 document.body.appendChild(canvas)
 const ctx = canvas.getContext('2d')
 ctx.font = '1em "Roboto Mono", monospace'
+ctx.strokeStyle = COLORS.BLACK
 
 export default function drawGame (state) {
   drawGrid(state)
@@ -17,7 +19,8 @@ export default function drawGame (state) {
 
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
-  ctx.fillText('Press <space> to start', 40, (BOARD.HEIGHT * BLOCK.WIDTH) / 2 - 20)
+  ctx.fillText('Press <space> to start', 40,
+    (BOARD.HEIGHT * BLOCK.WIDTH) / 2 - 20)
   if (state.gameInfo.gameOver) {
     ctx.fillText('Game over', 100, (BOARD.HEIGHT * BLOCK.WIDTH) / 4 - 20)
   }
@@ -33,17 +36,13 @@ function drawGrid (state) {
 
 function drawCurrentTetrimino (state) {
   const { tetromino } = state
-  drawTetromino(tetromino)
-}
-
-function drawTetromino (tetromino) {
   forEachBlock(tetromino, (x, y) => {
     drawGridSquare(x, y, tetromino.color)
   })
 }
 
 function drawGridSquare (x, y, color) {
-  color = color || COLORS.BG
+  color = color || COLORS.LIGHT_GRAY
   drawSquare(x * BLOCK.WIDTH, y * BLOCK.WIDTH, BLOCK.WIDTH, color)
 }
 
@@ -51,7 +50,10 @@ function drawSquare (x, y, width, color) {
   ctx.beginPath()
   ctx.rect(x, y, width, width)
   ctx.fillStyle = color
+  ctx.strokeStyle = COLORS.LIGHT_GRAY
+  ctx.lineWidth = 2
   ctx.fill()
+  ctx.stroke()
   ctx.closePath()
 }
 
