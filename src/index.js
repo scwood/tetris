@@ -7,10 +7,6 @@ import * as actions from './actions'
 const store = configureStore()
 const { dispatch } = store
 
-store.subscribe(() => {
-  drawGame(store.getState())
-})
-
 WebFont.load({
   google: {
     families: ['Roboto Mono']
@@ -19,13 +15,20 @@ WebFont.load({
 })
 
 function start () {
+  store.subscribe(() => {
+    drawGame(store.getState())
+  })
+
   dispatch(actions.resizeGame())
-  drawGame(store.getState())
+
   setInterval(() => {
     if (store.getState().gameInfo.started) {
       dispatch(actions.moveDown())
     }
   }, 200)
+
+  window.onresize = handleResize
+  document.addEventListener('keydown', handleKeydown)
 }
 
 function handleKeydown (e) {
@@ -54,6 +57,3 @@ function handleKeydown (e) {
 function handleResize () {
   dispatch(actions.resizeGame())
 }
-
-window.onresize = handleResize
-document.addEventListener('keydown', handleKeydown)
