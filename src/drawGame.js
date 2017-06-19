@@ -6,14 +6,9 @@ const ctx = canvas.getContext('2d')
 document.body.appendChild(canvas)
 
 let blockSize
-scaleCanvas(canvas)
-
-window.onresize = () => {
-  scaleCanvas(canvas)
-}
 
 export default function drawGame (state) {
-  scaleCanvas(canvas)
+  resizeCanvas(canvas, state)
   drawGrid(state)
   if (state.gameInfo.started) {
     drawCurrentTetrimino(state)
@@ -25,10 +20,9 @@ export default function drawGame (state) {
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
   ctx.fillText('Press <space> to start', blockSize * 1.5,
-    (BOARD.HEIGHT * blockSize) / 2 - 20)
+    (BOARD.HEIGHT * blockSize) / 2.1)
   if (state.gameInfo.gameOver) {
-    ctx.fillText('Game over', blockSize * 3.4,
-      (BOARD.HEIGHT * blockSize) / 4)
+    ctx.fillText('Game over', blockSize * 3.4, (BOARD.HEIGHT * blockSize) / 4)
   }
 }
 
@@ -74,9 +68,8 @@ function getPixelRatio () {
   return dpr / bsr
 }
 
-function scaleCanvas (canvas) {
-  const width = window.innerWidth - 20 // -20 to accommodate window padding
-  const height = window.innerHeight - 20
+function resizeCanvas (canvas, state) {
+  const { width, height } = state.gameInfo
   const ratio = getPixelRatio()
   canvas.width = width * ratio
   canvas.height = height * ratio

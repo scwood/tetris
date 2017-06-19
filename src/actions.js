@@ -10,7 +10,7 @@ export const MOVE_LEFT = 'MOVE_LEFT'
 export const MOVE_RIGHT = 'MOVE_RIGHT'
 export const START_GAME = 'START_GAME'
 export const END_GAME = 'END_GAME'
-export const RESIZE_BLOCK = 'RESIZE_BLOCK'
+export const RESIZE_GAME = 'RESIZE_GAME'
 
 export function moveDown () {
   return (dispatch, getState) => {
@@ -60,9 +60,10 @@ export function rotate () {
   }
 }
 
-export function resizeBlock () {
+export function resizeGame () {
+  const width = window.innerWidth - 20 // -20 for window padding
   const height = window.innerHeight - 20
-  return { type: RESIZE_BLOCK, size: height / 20 }
+  return { type: RESIZE_GAME, width, height }
 }
 
 export function startGame () {
@@ -102,13 +103,13 @@ function getColor (tetromino) {
 
 function isValidPlacement (tetromino, grid) {
   return everyBlock(tetromino, (x, y) => {
-    if (grid[y][x]) {
-      return false
-    }
     if (x < 0 || x > BOARD.WIDTH - 1) {
       return false
     }
     if (y < 0 || y > BOARD.HEIGHT - 1) {
+      return false
+    }
+    if (grid[y][x]) {
       return false
     }
     return true
