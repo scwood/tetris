@@ -12,13 +12,13 @@ export const COLORS = {
 }
 
 export const TETROMINOS = {
-  I: { rotations: [0x0F00, 0x2222, 0x00F0, 0x4444], color: '#5E8D87' },
-  J: { rotations: [0x0E20, 0x44C0, 0x8E00, 0x6440], color: '#5F819D' },
-  L: { rotations: [0x0E80, 0xC440, 0x2E00, 0x4460], color: '#85678F' },
-  O: { rotations: [0xCC00, 0xCC00, 0xCC00, 0xCC00], color: '#6C7A80' },
-  S: { rotations: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: '#B5BD68' },
-  T: { rotations: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: '#DE935F' },
-  Z: { rotations: [0x0C60, 0x4C80, 0xC600, 0x2640], color: '#A54242' }
+  I: { rotations: [0x0F00, 0x2222, 0x00F0, 0x4444], color: '#03a9f4' },
+  J: { rotations: [0x0E20, 0x44C0, 0x8E00, 0x6440], color: '#0d47a1' },
+  L: { rotations: [0x0E80, 0xC440, 0x2E00, 0x4460], color: '#ff9100' },
+  O: { rotations: [0xCC00, 0xCC00, 0xCC00, 0xCC00], color: '#fdd835' },
+  S: { rotations: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: '#8bc34a' },
+  T: { rotations: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: '#7e57c2' },
+  Z: { rotations: [0x0C60, 0x4C80, 0xC600, 0x2640], color: '#ef5350' }
 }
 
 export const KEY = {
