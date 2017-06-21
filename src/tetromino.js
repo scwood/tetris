@@ -1,16 +1,30 @@
-import { BOARD, TETROMINOS } from './constants'
-import { forEachBlock, everyBlock, someBlock } from './utils'
+import { END_GAME } from './gameInfo'
+import { TETROMINOS, BOARD } from './constants'
+import { addTetrominoToGrid, clearCompletedRows } from './grid'
+import { getRandomInt, everyBlock, someBlock } from './utils'
 
-export const ROTATE = 'ROTATE'
-export const CLEAR_ROWS = 'CLEAR_ROWS'
-export const SET_GRID_COLOR = 'SET_GRID_COLOR'
-export const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
-export const MOVE_DOWN = 'MOVE_DOWN'
-export const MOVE_LEFT = 'MOVE_LEFT'
-export const MOVE_RIGHT = 'MOVE_RIGHT'
-export const START_GAME = 'START_GAME'
-export const END_GAME = 'END_GAME'
-export const RESIZE_GAME = 'RESIZE_GAME'
+const MOVE_DOWN = 'MOVE_DOWN'
+const MOVE_LEFT = 'MOVE_LEFT'
+const MOVE_RIGHT = 'MOVE_RIGHT'
+const ROTATE = 'ROTATE'
+const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
+
+export default function tetromino (state = initializeTetromino(), action) {
+  switch (action.type) {
+    case MOVE_LEFT:
+      return { ...state, x: state.x - 1 }
+    case MOVE_RIGHT:
+      return { ...state, x: state.x + 1 }
+    case MOVE_DOWN:
+      return { ...state, y: state.y + 1 }
+    case ADD_NEW_TETROMINO:
+      return initializeTetromino()
+    case ROTATE:
+      return { ...state, rotation: action.rotation }
+    default:
+      return state
+  }
+}
 
 export function moveDown () {
   return (dispatch, getState) => {
@@ -60,45 +74,19 @@ export function rotate () {
   }
 }
 
-export function resizeGame () {
-  const width = window.innerWidth - 20 // -20 for window padding
-  const height = window.innerHeight - 20
-  return { type: RESIZE_GAME, width, height }
-}
-
-export function startGame () {
-  return { type: START_GAME }
-}
-
-function addTetrominoToGrid () {
-  return (dispatch, getState) => {
-    const { tetromino } = getState()
-    forEachBlock(tetromino, (x, y) => {
-      dispatch({ type: SET_GRID_COLOR, x, y, color: getColor(tetromino) })
-    })
+function initializeTetromino () {
+  const tetrominoNames = Object.keys(TETROMINOS)
+  const index = getRandomInt(0, tetrominoNames.length - 1)
+  const newTetrominoName = tetrominoNames[index]
+  const { rotations, color } = TETROMINOS[newTetrominoName]
+  const rotation = rotations[0]
+  return {
+    name: newTetrominoName,
+    x: (BOARD.WIDTH / 2) - 2,
+    y: -1,
+    color,
+    rotation
   }
-}
-
-function clearCompletedRows () {
-  return (dispatch, getState) => {
-    const { grid } = getState()
-    const rowsToClear = grid.map((row, i) => i).filter(i => {
-      return grid[i].every(x => x)
-    })
-    dispatch({ type: CLEAR_ROWS, rowsToClear })
-  }
-}
-
-function getNextRotation (tetromino) {
-  const { name, rotation } = tetromino
-  const { rotations } = TETROMINOS[name]
-  const oldIndex = rotations.indexOf(rotation)
-  const newIndex = (oldIndex + 1) % rotations.length
-  return rotations[newIndex]
-}
-
-function getColor (tetromino) {
-  return TETROMINOS[tetromino.name].color
 }
 
 function isValidPlacement (tetromino, grid) {
@@ -126,4 +114,12 @@ function hasHitTop (tetromino) {
   return someBlock(tetromino, (x, y) => {
     return y <= 0
   })
+}
+
+function getNextRotation (tetromino) {
+  const { name, rotation } = tetromino
+  const { rotations } = TETROMINOS[name]
+  const oldIndex = rotations.indexOf(rotation)
+  const newIndex = (oldIndex + 1) % rotations.length
+  return rotations[newIndex]
 }
