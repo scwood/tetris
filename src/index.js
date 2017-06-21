@@ -2,7 +2,8 @@ import WebFont from 'webfontloader'
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import * as actions from './actions'
+import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
+import { resizeGame, startGame } from './gameInfo'
 
 WebFont.load({
   google: {
@@ -24,7 +25,7 @@ function start () {
 
   setInterval(() => {
     if (store.getState().gameInfo.started) {
-      dispatch(actions.moveDown())
+      dispatch(moveDown())
     }
   }, 200)
 
@@ -35,26 +36,26 @@ function start () {
 function handleKeydown (e) {
   if (!store.getState().gameInfo.started) {
     if (e.keyCode === KEY.SPACE) {
-      dispatch(actions.startGame())
+      dispatch(startGame())
     }
     return
   }
   switch (e.keyCode) {
     case KEY.LEFT:
-      dispatch(actions.moveLeft())
+      dispatch(moveLeft())
       break
     case KEY.RIGHT:
-      dispatch(actions.moveRight())
+      dispatch(moveRight())
       break
     case KEY.DOWN:
-      dispatch(actions.moveDown())
+      dispatch(moveDown())
       break
     case KEY.UP:
-      dispatch(actions.rotate())
+      dispatch(rotate())
       break
   }
 }
 
 function handleResize () {
-  dispatch(actions.resizeGame())
+  dispatch(resizeGame())
 }
