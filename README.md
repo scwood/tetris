@@ -1,12 +1,12 @@
 ```bash
 git clone https://github.com/scwood/tetris
 cd tetris
-yarn
+npm install
 
 # dev
-yarn start
+npm start
 
 # prod
-yarn build
+npm build
 # serve public/
 ```
