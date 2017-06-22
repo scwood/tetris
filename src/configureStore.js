@@ -14,6 +14,7 @@ const reducer = combineReducers({
 export default function configureStore () {
   return createStore(
     reducer,
-    applyMiddleware(thunk, logger)
+    // applyMiddleware(thunk, logger)
+    applyMiddleware(thunk)
   )
 }

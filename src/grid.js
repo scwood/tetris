@@ -1,5 +1,5 @@
 import { TETROMINOS } from './constants'
-import { END_GAME } from './gameInfo'
+import { incrementSore, END_GAME } from './gameInfo'
 import { forEachBlock } from './utils'
 
 const SET_GRID_COLOR = 'SET_GRID_COLOR'
@@ -31,8 +31,22 @@ export default function grid (state = initializeGrid(), action) {
 export function clearCompletedRows () {
   return (dispatch, getState) => {
     const { grid } = getState()
-    const rowsToClear = grid.map((row, i) => i).filter(i => {
-      return grid[i].every(x => x)
+    const rowsToClear = []
+    let consecutive = 0
+    let previousIndex = -1
+    grid.forEach((row, i) => {
+      const cleared = grid[i].every(x => x)
+      if (cleared) {
+        rowsToClear.push(i)
+      }
+      if (cleared && previousIndex + 1 === i) {
+        consecutive += 1
+      }
+      if ((!cleared || i === 19) && consecutive > 0) {
+        dispatch(incrementSore(100 * consecutive))
+        consecutive = 0
+      }
+      previousIndex = i
     })
     dispatch({ type: CLEAR_ROWS, rowsToClear })
   }
