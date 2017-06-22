@@ -1,4 +1,4 @@
-import { END_GAME } from './gameInfo'
+import { endGame } from './gameInfo'
 import { TETROMINOS, BOARD } from './constants'
 import { addTetrominoToGrid, clearCompletedRows } from './grid'
 import { getRandomInt, everyBlock, someBlock } from './utils'
@@ -31,7 +31,7 @@ export function moveDown () {
     const { tetromino, grid } = getState()
     if (hasHitBottom(tetromino, grid)) {
       if (hasHitTop(tetromino)) {
-        dispatch({ type: END_GAME })
+        dispatch(endGame())
         return
       }
       dispatch(addTetrominoToGrid())

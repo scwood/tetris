@@ -5,11 +5,13 @@ const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 document.body.appendChild(canvas)
 
+const { WIDTH, HEIGHT } = BOARD
 let blockSize
 
 export default function drawGame (state) {
   resizeCanvas(canvas, state)
   drawGrid(state)
+  drawInfo(state)
   if (state.gameInfo.started) {
     drawCurrentTetrimino(state)
   } else {
@@ -19,10 +21,9 @@ export default function drawGame (state) {
 
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
-  ctx.fillText('Press <space> to start', blockSize * 1.5,
-    (BOARD.HEIGHT * blockSize) / 2.1)
+  ctx.fillText('Press <space> to start', actual(1.5), actual(HEIGHT) / 2.1)
   if (state.gameInfo.gameOver) {
-    ctx.fillText('Game over', blockSize * 3.4, (BOARD.HEIGHT * blockSize) / 4)
+    ctx.fillText('Game over', actual(3.4), (actual(HEIGHT) / 4))
   }
 }
 
@@ -41,9 +42,24 @@ function drawCurrentTetrimino (state) {
   })
 }
 
+function drawInfo (state) {
+  const { score } = state.gameInfo
+  drawInfoElement(`Score: ${score}`, actual(1))
+  drawInfoElement(`<space> : start`, actual(3))
+  drawInfoElement(`<right> : move right`, actual(4))
+  drawInfoElement(`<left> : move left`, actual(5))
+  drawInfoElement(`<up> : rotate piece`, actual(6))
+  drawInfoElement(`<down> : soft drop`, actual(7))
+}
+
+function drawInfoElement (text, y) {
+  ctx.fillStyle = 'black'
+  ctx.fillText(text, actual(WIDTH) * 1.07, y)
+}
+
 function drawGridSquare (x, y, color) {
   color = color || COLORS.LIGHT_GRAY
-  drawSquare(x * blockSize, y * blockSize, blockSize, color)
+  drawSquare(actual(x), actual(y), actual(1), color)
 }
 
 function drawSquare (x, y, width, color) {
@@ -78,4 +94,8 @@ function resizeCanvas (canvas, state) {
   canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0)
   blockSize = height / 20
   ctx.font = `${blockSize / 2}px "Roboto Mono", monospace`
+}
+
+function actual (n) {
+  return blockSize * n
 }
