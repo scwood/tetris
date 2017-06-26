@@ -93,10 +93,10 @@ function isValidPlacement (tetromino, grid) {
     if (x < 0 || x > BOARD.WIDTH - 1) {
       return false
     }
-    if (y < 0 || y > BOARD.HEIGHT - 1) {
+    if (y > BOARD.HEIGHT - 1) {
       return false
     }
-    if (grid[y][x]) {
+    if (y > 0 && grid[y][x]) {
       return false
     }
     return true

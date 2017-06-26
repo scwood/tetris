@@ -5,16 +5,9 @@ import { KEY } from './constants'
 import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
 import { resizeGame, startGame } from './gameInfo'
 
-WebFont.load({
-  google: {
-    families: ['Roboto Mono']
-  },
-  active: start,
-  inactive: start
-})
-
 const store = configureStore()
 const { dispatch } = store
+start()
 
 function start () {
   store.subscribe(() => {

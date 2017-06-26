@@ -88,7 +88,7 @@ function resizeCanvas (canvas, state) {
   canvas.style.height = height + 'px'
   canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0)
   blockSize = height / 20
-  ctx.font = `${blockSize / 2}px "Roboto Mono", monospace`
+  ctx.font = `${blockSize / 2}px monospace`
 }
 
 function actual (n) {
