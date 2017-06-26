@@ -9,6 +9,21 @@ const MOVE_RIGHT = 'MOVE_RIGHT'
 const ROTATE = 'ROTATE'
 const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
 
+function initializeTetromino () {
+  const tetrominoNames = Object.keys(TETROMINOS)
+  const index = getRandomInt(0, tetrominoNames.length - 1)
+  const newTetrominoName = tetrominoNames[index]
+  const { rotations, color } = TETROMINOS[newTetrominoName]
+  const rotation = rotations[0]
+  return {
+    name: newTetrominoName,
+    x: (BOARD.WIDTH / 2) - 2,
+    y: -1,
+    color,
+    rotation
+  }
+}
+
 export default function tetromino (state = initializeTetromino(), action) {
   switch (action.type) {
     case MOVE_LEFT:
@@ -39,10 +54,9 @@ export function moveDown () {
       dispatch({ type: ADD_NEW_TETROMINO })
       return
     }
-    if (!isValidPlacement({...tetromino, y: tetromino.y + 1}, grid)) {
-      return
+    if (isValidPlacement({...tetromino, y: tetromino.y + 1}, grid)) {
+      dispatch({ type: MOVE_DOWN })
     }
-    dispatch({ type: MOVE_DOWN })
   }
 }
 
@@ -71,21 +85,6 @@ export function rotate () {
     if (isValidPlacement({ ...tetromino, rotation: newRotation }, grid)) {
       dispatch({ type: ROTATE, rotation: newRotation })
     }
-  }
-}
-
-function initializeTetromino () {
-  const tetrominoNames = Object.keys(TETROMINOS)
-  const index = getRandomInt(0, tetrominoNames.length - 1)
-  const newTetrominoName = tetrominoNames[index]
-  const { rotations, color } = TETROMINOS[newTetrominoName]
-  const rotation = rotations[0]
-  return {
-    name: newTetrominoName,
-    x: (BOARD.WIDTH / 2) - 2,
-    y: -1,
-    color,
-    rotation
   }
 }
 

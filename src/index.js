@@ -27,7 +27,7 @@ function start () {
     if (store.getState().gameInfo.started) {
       dispatch(moveDown())
     }
-  }, 200)
+  }, 2000) // level 0: 48 frames per block @ 24fps = 2000 ms
 
   window.onresize = handleResize
   document.addEventListener('keydown', handleKeydown)

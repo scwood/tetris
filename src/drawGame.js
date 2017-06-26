@@ -4,7 +4,6 @@ import { forEachBlock } from './utils'
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 document.body.appendChild(canvas)
-
 const { WIDTH, HEIGHT } = BOARD
 let blockSize
 
@@ -43,13 +42,9 @@ function drawCurrentTetrimino (state) {
 }
 
 function drawInfo (state) {
-  const { score } = state.gameInfo
+  const { score, lines } = state.gameInfo
   drawInfoElement(`Score: ${score}`, actual(1))
-  drawInfoElement(`<space> : start`, actual(3))
-  drawInfoElement(`<right> : move right`, actual(4))
-  drawInfoElement(`<left> : move left`, actual(5))
-  drawInfoElement(`<up> : rotate piece`, actual(6))
-  drawInfoElement(`<down> : soft drop`, actual(7))
+  drawInfoElement(`Lines: ${lines}`, actual(2))
 }
 
 function drawInfoElement (text, y) {

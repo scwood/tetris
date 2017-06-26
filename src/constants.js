@@ -33,3 +33,5 @@ export const KEY = {
   RIGHT: 39,
   DOWN: 40
 }
+
+export const POINTS = [0, 40, 100, 300, 1200]

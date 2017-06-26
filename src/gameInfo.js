@@ -1,7 +1,19 @@
 export const END_GAME = 'END_GAME'
 const START_GAME = 'START_GAME'
 const RESIZE_GAME = 'RESIZE_GAME'
-const INCREMENT_SCORE = 'INCREMENT_SCORE'
+const ADD_POINTS = 'ADD_POINTS'
+const INCREMENT_LINES = 'INCREMENT_LINES'
+
+function initializeGameInfo () {
+  return {
+    started: false,
+    gameOver: false,
+    width: 0,
+    height: 0,
+    score: 0,
+    lines: 0
+  }
+}
 
 export default function gameInfo (state = initializeGameInfo(), action) {
   switch (action.type) {
@@ -11,8 +23,10 @@ export default function gameInfo (state = initializeGameInfo(), action) {
       return { ...state, started: false, gameOver: true }
     case RESIZE_GAME:
       return { ...state, width: action.width, height: action.height }
-    case INCREMENT_SCORE:
+    case ADD_POINTS:
       return { ...state, score: state.score + action.points }
+    case INCREMENT_LINES:
+      return { ...state, lines: state.lines + 1 }
     default:
       return state
   }
@@ -32,16 +46,10 @@ export function endGame () {
   return { type: END_GAME }
 }
 
-export function incrementSore (points) {
-  return { type: INCREMENT_SCORE, points }
+export function addPoints (points) {
+  return { type: ADD_POINTS, points }
 }
 
-function initializeGameInfo () {
-  return {
-    started: false,
-    gameOver: false,
-    width: 0,
-    height: 0,
-    score: 0
-  }
+export function incrementLines () {
+  return { type: INCREMENT_LINES }
 }
