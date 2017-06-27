@@ -42,9 +42,10 @@ function drawCurrentTetrimino (state) {
 }
 
 function drawInfo (state) {
-  const { score, lines } = state.gameInfo
-  drawInfoElement(`Score: ${score}`, actual(1))
-  drawInfoElement(`Lines: ${lines}`, actual(2))
+  const { gameInfo: { highScore, score, lines } } = state;
+  drawInfoElement(`High Score: ${highScore}`, actual(1))
+  drawInfoElement(`Score: ${score}`, actual(3))
+  drawInfoElement(`Lines: ${lines}`, actual(4))
 }
 
 function drawInfoElement (text, y) {
