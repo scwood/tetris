@@ -1,18 +1,20 @@
 import gameInfo from './gameInfo'
 import grid from './grid'
+import score from './score'
 import tetromino from './tetromino'
 import thunk from 'redux-thunk'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
+  gameInfo,
   grid,
-  tetromino,
-  gameInfo
+  score,
+  tetromino
 })
 
 export default function configureStore () {
   return createStore(
-    reducer,
+    rootReducer,
     applyMiddleware(thunk)
   )
 }

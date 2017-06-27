@@ -1,12 +1,13 @@
 import { TETROMINOS, POINTS } from './constants'
-import { addPoints, incrementLines, END_GAME } from './gameInfo'
+import { END_GAME } from './gameInfo'
+import { addPoints, incrementLines, } from './score'
 import { forEachBlock } from './utils'
 
 const SET_GRID_COLOR = 'SET_GRID_COLOR'
 const CLEAR_ROWS = 'CLEAR_ROWS'
 
 function initializeGrid () {
-  return Array(20).fill(initializeGridRow())
+  return new Array(20).fill(initializeGridRow())
 }
 
 export default function grid (state = initializeGrid(), action) {

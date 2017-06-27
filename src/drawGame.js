@@ -1,9 +1,11 @@
 import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
+import { getCurrentScore, getHighScore, getNumberOfLine } from './score'
 
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 document.body.appendChild(canvas)
+
 const { WIDTH, HEIGHT } = BOARD
 let blockSize
 
@@ -42,10 +44,9 @@ function drawCurrentTetrimino (state) {
 }
 
 function drawInfo (state) {
-  const { gameInfo: { highScore, score, lines } } = state;
-  drawInfoElement(`High Score: ${highScore}`, actual(1))
-  drawInfoElement(`Score: ${score}`, actual(3))
-  drawInfoElement(`Lines: ${lines}`, actual(4))
+  drawInfoElement(`High Score: ${getHighScore(state)}`, actual(1))
+  drawInfoElement(`Score: ${getCurrentScore(state)}`, actual(3))
+  drawInfoElement(`Lines: ${getNumberOfLine(state)}`, actual(4))
 }
 
 function drawInfoElement (text, y) {
