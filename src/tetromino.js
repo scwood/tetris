@@ -1,7 +1,14 @@
-import { endGame } from './gameInfo'
 import { TETROMINOS, BOARD } from './constants'
 import { addTetrominoToGrid, clearCompletedRows, getGrid } from './grid'
 import { getRandomInt, everyBlock, someBlock } from './utils'
+import { addPoints } from './score'
+import {
+  endGame,
+  getSpacesSoftDropped,
+  incrementSpacesSoftDropped,
+  isSoftDropping,
+  resetSpacesSoftDropped
+} from './gameInfo'
 
 const MOVE_DOWN = 'MOVE_DOWN'
 const MOVE_LEFT = 'MOVE_LEFT'
@@ -54,11 +61,17 @@ export function moveDown () {
       }
       dispatch(addTetrominoToGrid())
       dispatch(clearCompletedRows())
+      const spacesSoftDropped = getSpacesSoftDropped(getState())
+      dispatch(addPoints(spacesSoftDropped))
+      dispatch(resetSpacesSoftDropped())
       dispatch({ type: ADD_NEW_TETROMINO })
       return
     }
-    if (isValidPlacement({...tetromino, y: tetromino.y + 1}, grid)) {
+    if (isValidPlacement({ ...tetromino, y: tetromino.y + 1 }, grid)) {
       dispatch({ type: MOVE_DOWN })
+      if (isSoftDropping(getState())) {
+        dispatch(incrementSpacesSoftDropped())
+      }
     }
   }
 }
