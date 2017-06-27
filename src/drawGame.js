@@ -1,6 +1,9 @@
 import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
 import { getCurrentScore, getHighScore, getNumberOfLine } from './score'
+import { getGrid } from './grid'
+import { getTetromino } from './tetromino'
+import { isGameStarted, isGameOver, getWidth, getHeight } from './gameInfo'
 
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
@@ -13,7 +16,7 @@ export default function drawGame (state) {
   resizeCanvas(canvas, state)
   drawGrid(state)
   drawInfo(state)
-  if (state.gameInfo.started) {
+  if (isGameStarted(state)) {
     drawCurrentTetrimino(state)
   } else {
     drawStartScreen(state)
@@ -23,13 +26,13 @@ export default function drawGame (state) {
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
   ctx.fillText('Press <space> to start', actual(1.5), actual(HEIGHT) / 2.1)
-  if (state.gameInfo.gameOver) {
+  if (isGameOver(state)) {
     ctx.fillText('Game over', actual(3.4), (actual(HEIGHT) / 4))
   }
 }
 
 function drawGrid (state) {
-  state.grid.forEach((row, y) => {
+  getGrid(state).forEach((row, y) => {
     row.forEach((color, x) => {
       drawGridSquare(x, y, color)
     })
@@ -37,7 +40,7 @@ function drawGrid (state) {
 }
 
 function drawCurrentTetrimino (state) {
-  const { tetromino } = state
+  const tetromino = getTetromino(state)
   forEachBlock(tetromino, (x, y) => {
     drawGridSquare(x, y, tetromino.color)
   })
@@ -82,7 +85,8 @@ function getPixelRatio () {
 }
 
 function resizeCanvas (canvas, state) {
-  const { width, height } = state.gameInfo
+  const width = getWidth(state)
+  const height = getHeight(state)
   const ratio = getPixelRatio()
   canvas.width = width * ratio
   canvas.height = height * ratio

@@ -1,9 +1,9 @@
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
-import { isGameStarted, resizeGame, setIsSoftDropping, startGame } from './gameInfo'
 import { fetchLocalHighScore } from './score'
+import { isGameStarted, resizeGame, setIsSoftDropping, startGame } from './gameInfo'
+import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
 
 const store = configureStore()
 const { dispatch } = store

@@ -26,6 +26,11 @@ export default function gameInfo (state = initialState, action) {
   }
 }
 
+export const isGameStarted = state => state.gameInfo.started
+export const isGameOver = state => state.gameInfo.gameOver
+export const getWidth = state => state.gameInfo.width
+export const getHeight = state => state.gameInfo.height
+
 export function resizeGame () {
   const width = window.innerWidth - 20 // -20 for window padding
   const height = window.innerHeight - 20
@@ -42,8 +47,4 @@ export function endGame () {
 
 export function setIsSoftDropping(isSoftDropping) {
   return { type: SET_IS_SOFT_DROPPING, isSoftDropping }
-}
-
-export function isGameStarted (state) {
-  return state.gameInfo.started
 }

@@ -1,7 +1,8 @@
-import { TETROMINOS, POINTS } from './constants'
 import { END_GAME } from './gameInfo'
-import { addPoints, incrementLines, } from './score'
+import { TETROMINOS, POINTS } from './constants'
+import { addPoints, incrementLines } from './score'
 import { forEachBlock } from './utils'
+import { getTetromino } from './tetromino'
 
 const SET_GRID_COLOR = 'SET_GRID_COLOR'
 const CLEAR_ROWS = 'CLEAR_ROWS'
@@ -33,9 +34,11 @@ export default function grid (state = initializeGrid(), action) {
   }
 }
 
+export const getGrid = state => state.grid
+
 export function clearCompletedRows () {
   return (dispatch, getState) => {
-    const { grid } = getState()
+    const grid = getGrid(getState())
     const rowsToClear = []
     let consecutive = 0
     let previousIndex = -1
@@ -60,7 +63,7 @@ export function clearCompletedRows () {
 
 export function addTetrominoToGrid () {
   return (dispatch, getState) => {
-    const { tetromino } = getState()
+    const tetromino = getTetromino(getState())
     forEachBlock(tetromino, (x, y) => {
       const color = TETROMINOS[tetromino.name].color
       dispatch({ type: SET_GRID_COLOR, x, y, color })

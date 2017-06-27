@@ -43,10 +43,10 @@ export function incrementLines () {
 export function addPoints (points) {
   return (dispatch, getState) => {
     dispatch({ type: ADD_POINTS, points })
-    const { gameInfo: { score } } = getState()
-    if (getLocalHighScore() <= score) {
-      setLocalHighScore(score)
-      dispatch(updateHighScore(score))
+    const currentScore = getCurrentScore(getState())
+    if (getLocalHighScore() <= currentScore) {
+      setLocalHighScore(currentScore)
+      dispatch(updateHighScore(currentScore))
     }
   }
 }

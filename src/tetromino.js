@@ -1,6 +1,6 @@
 import { endGame } from './gameInfo'
 import { TETROMINOS, BOARD } from './constants'
-import { addTetrominoToGrid, clearCompletedRows } from './grid'
+import { addTetrominoToGrid, clearCompletedRows, getGrid } from './grid'
 import { getRandomInt, everyBlock, someBlock } from './utils'
 
 const MOVE_DOWN = 'MOVE_DOWN'
@@ -41,9 +41,12 @@ export default function tetromino (state = initializeTetromino(), action) {
   }
 }
 
+export const getTetromino = state => state.tetromino
+
 export function moveDown () {
   return (dispatch, getState) => {
-    const { tetromino, grid } = getState()
+    const tetromino = getTetromino(getState())
+    const grid = getGrid(getState())
     if (hasHitBottom(tetromino, grid)) {
       if (hasHitTop(tetromino)) {
         dispatch(endGame())
@@ -62,7 +65,8 @@ export function moveDown () {
 
 export function moveRight () {
   return (dispatch, getState) => {
-    const { tetromino, grid } = getState()
+    const tetromino = getTetromino(getState())
+    const grid = getGrid(getState())
     if (isValidPlacement({ ...tetromino, x: tetromino.x + 1 }, grid)) {
       dispatch({ type: MOVE_RIGHT })
     }
@@ -71,7 +75,8 @@ export function moveRight () {
 
 export function moveLeft () {
   return (dispatch, getState) => {
-    const { tetromino, grid } = getState()
+    const tetromino = getTetromino(getState())
+    const grid = getGrid(getState())
     if (isValidPlacement({ ...tetromino, x: tetromino.x - 1 }, grid)) {
       dispatch({ type: MOVE_LEFT })
     }
@@ -80,7 +85,8 @@ export function moveLeft () {
 
 export function rotate () {
   return (dispatch, getState) => {
-    const { tetromino, grid } = getState()
+    const tetromino = getTetromino(getState())
+    const grid = getGrid(getState())
     const newRotation = getNextRotation(tetromino)
     if (isValidPlacement({ ...tetromino, rotation: newRotation }, grid)) {
       dispatch({ type: ROTATE, rotation: newRotation })
