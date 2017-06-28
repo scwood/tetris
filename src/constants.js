@@ -16,15 +16,15 @@ export const COLORS = {
   RED: '#ef5350'
 }
 
-export const TETROMINOS = {
-  I: { rotations: [0x0F00, 0x2222, 0x00F0, 0x4444], color: COLORS.CYAN },
-  J: { rotations: [0x0E20, 0x44C0, 0x8E00, 0x6440], color: COLORS.BLUE },
-  L: { rotations: [0x0E80, 0xC440, 0x2E00, 0x4460], color: COLORS.ORANGE },
-  O: { rotations: [0x0CC0, 0x0CC0, 0x0CC0, 0x0CC0], color: COLORS.YELLOW },
-  S: { rotations: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: COLORS.GREEN },
-  T: { rotations: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: COLORS.MAGENTA },
-  Z: { rotations: [0x0C60, 0x4C80, 0xC600, 0x2640], color: COLORS.RED }
-}
+export const TETROMINOS = [
+  { rotations: [0x0F00, 0x2222, 0x00F0, 0x4444], color: COLORS.CYAN }, // I
+  { rotations: [0x0E20, 0x44C0, 0x8E00, 0x6440], color: COLORS.BLUE }, // J
+  { rotations: [0x0E80, 0xC440, 0x2E00, 0x4460], color: COLORS.ORANGE }, // L
+  { rotations: [0x0CC0, 0x0CC0, 0x0CC0, 0x0CC0], color: COLORS.YELLOW }, // O
+  { rotations: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: COLORS.GREEN }, // S
+  { rotations: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: COLORS.MAGENTA }, // T
+  { rotations: [0x0C60, 0x4C80, 0xC600, 0x2640], color: COLORS.RED } // Z
+]
 
 export const KEY = {
   ESC: 27,
