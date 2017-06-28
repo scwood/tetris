@@ -2,7 +2,7 @@ import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
 import { getCurrentScore, getHighScore, getNumberOfLine } from './score'
 import { getGrid } from './grid'
-import { getTetromino } from './tetromino'
+import { getTetromino, getNextTetromino } from './tetromino'
 import { isGameStarted, isGameOver, getWidth, getHeight } from './gameInfo'
 
 const canvas = document.createElement('canvas')
@@ -17,7 +17,7 @@ export default function drawGame (state) {
   drawGrid(state)
   drawInfo(state)
   if (isGameStarted(state)) {
-    drawCurrentTetrimino(state)
+    drawCurrentTetromino(state)
   } else {
     drawStartScreen(state)
   }
@@ -25,9 +25,9 @@ export default function drawGame (state) {
 
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
-  ctx.fillText('Press <space> to start', actual(1.5), actual(HEIGHT) / 2.1)
+  ctx.fillText('Press <space> to start', actual(1.7), actual(HEIGHT) / 2.07)
   if (isGameOver(state)) {
-    ctx.fillText('Game over', actual(3.4), (actual(HEIGHT) / 4))
+    ctx.fillText('Game over', actual(3.7), (actual(HEIGHT) / 4.3))
   }
 }
 
@@ -39,8 +39,15 @@ function drawGrid (state) {
   })
 }
 
-function drawCurrentTetrimino (state) {
+function drawCurrentTetromino (state) {
   const tetromino = getTetromino(state)
+  drawTetromino(tetromino)
+}
+
+function drawNextTetromino (state) {
+}
+
+function drawTetromino (tetromino) {
   forEachBlock(tetromino, (x, y) => {
     drawGridSquare(x, y, tetromino.color)
   })
@@ -50,6 +57,12 @@ function drawInfo (state) {
   drawInfoElement(`High Score: ${getHighScore(state)}`, actual(1))
   drawInfoElement(`Score: ${getCurrentScore(state)}`, actual(3))
   drawInfoElement(`Lines: ${getNumberOfLine(state)}`, actual(4))
+  if (isGameStarted(state)) {
+    const nextTetromino = getNextTetromino(state)
+    drawInfoElement(`Next piece:`, actual(6))
+    drawTetromino({ ...nextTetromino, x: 10.7, y: 6 })
+    drawNextTetromino(state)
+  }
 }
 
 function drawInfoElement (text, y) {
@@ -66,7 +79,7 @@ function drawSquare (x, y, width, color) {
   ctx.beginPath()
   ctx.rect(x, y, width, width)
   ctx.fillStyle = color
-  ctx.strokeStyle = COLORS.LIGHT_GRAY
+  ctx.strokeStyle = COLORS.WHITE
   ctx.lineWidth = blockSize / 10
   ctx.fill()
   ctx.stroke()

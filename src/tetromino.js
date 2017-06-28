@@ -16,22 +16,12 @@ const MOVE_RIGHT = 'MOVE_RIGHT'
 const ROTATE = 'ROTATE'
 const ADD_NEW_TETROMINO = 'ADD_NEW_TETROMINO'
 
-function initializeTetromino () {
-  const tetrominoNames = Object.keys(TETROMINOS)
-  const index = getRandomInt(0, tetrominoNames.length - 1)
-  const newTetrominoName = tetrominoNames[index]
-  const { rotations, color } = TETROMINOS[newTetrominoName]
-  const rotation = rotations[0]
-  return {
-    name: newTetrominoName,
-    x: (BOARD.WIDTH / 2) - 2,
-    y: -1,
-    color,
-    rotation
-  }
+const initialState = {
+  ...generateRandomTetromino(),
+  nextTetromino: generateRandomTetromino()
 }
 
-export default function tetromino (state = initializeTetromino(), action) {
+export default function tetromino (state = initialState, action) {
   switch (action.type) {
     case MOVE_LEFT:
       return { ...state, x: state.x - 1 }
@@ -40,7 +30,8 @@ export default function tetromino (state = initializeTetromino(), action) {
     case MOVE_DOWN:
       return { ...state, y: state.y + 1 }
     case ADD_NEW_TETROMINO:
-      return initializeTetromino()
+      const nextTetromino = state.nextTetromino
+      return { ...nextTetromino, nextTetromino: generateRandomTetromino() }
     case ROTATE:
       return { ...state, rotation: action.rotation }
     default:
@@ -49,6 +40,7 @@ export default function tetromino (state = initializeTetromino(), action) {
 }
 
 export const getTetromino = state => state.tetromino
+export const getNextTetromino = state => state.tetromino.nextTetromino
 
 export function moveDown () {
   return (dispatch, getState) => {
@@ -140,4 +132,19 @@ function getNextRotation (tetromino) {
   const oldIndex = rotations.indexOf(rotation)
   const newIndex = (oldIndex + 1) % rotations.length
   return rotations[newIndex]
+}
+
+function generateRandomTetromino () {
+  const tetrominoNames = Object.keys(TETROMINOS)
+  const index = getRandomInt(0, tetrominoNames.length - 1)
+  const newTetrominoName = tetrominoNames[index]
+  const { rotations, color } = TETROMINOS[newTetrominoName]
+  const rotation = rotations[0]
+  return {
+    name: newTetrominoName,
+    x: (BOARD.WIDTH / 2) - 2,
+    y: -1,
+    color,
+    rotation
+  }
 }

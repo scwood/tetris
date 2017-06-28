@@ -4,6 +4,7 @@ export const BOARD = {
 }
 
 export const COLORS = {
+  WHITE: '#ffffff',
   LIGHT_GRAY: '#eeeeee',
   DARK_GRAY: '#999999',
   CYAN: '#03a9f4',
