@@ -65,7 +65,7 @@ export function addTetrominoToGrid () {
   return (dispatch, getState) => {
     const tetromino = getTetromino(getState())
     forEachBlock(tetromino, (x, y) => {
-      const color = TETROMINOS[tetromino.name].color
+      const color = TETROMINOS[tetromino.index].color
       dispatch({ type: SET_GRID_COLOR, x, y, color })
     })
   }

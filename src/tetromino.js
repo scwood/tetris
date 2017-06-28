@@ -111,8 +111,7 @@ function isValidPlacement (tetromino, grid) {
       return false
     }
     return true
-  })
-}
+  }) }
 
 function hasHitBottom (tetromino, grid) {
   return someBlock(tetromino, (x, y) => {
@@ -127,21 +126,25 @@ function hasHitTop (tetromino) {
 }
 
 function getNextRotation (tetromino) {
-  const { name, rotation } = tetromino
-  const { rotations } = TETROMINOS[name]
-  const oldIndex = rotations.indexOf(rotation)
-  const newIndex = (oldIndex + 1) % rotations.length
-  return rotations[newIndex]
+  const { index, rotation } = tetromino
+  const { rotations } = TETROMINOS[index]
+  const oldRotationIndex = rotations.indexOf(rotation)
+  const newRotationIndex = (oldRotationIndex + 1) % rotations.length
+  return rotations[newRotationIndex]
 }
 
-function generateRandomTetromino () {
-  const tetrominoNames = Object.keys(TETROMINOS)
-  const index = getRandomInt(0, tetrominoNames.length - 1)
-  const newTetrominoName = tetrominoNames[index]
-  const { rotations, color } = TETROMINOS[newTetrominoName]
+function generateRandomTetromino (previousIndex) {
+  let newIndex
+  const firstRoll = getRandomInt(0, 7)
+  if (firstRoll === 7 || firstRoll === previousIndex) {
+    newIndex = getRandomInt(0, 6)
+  } else {
+    newIndex = firstRoll
+  }
+  const { rotations, color } = TETROMINOS[newIndex]
   const rotation = rotations[0]
   return {
-    name: newTetrominoName,
+    index: newIndex,
     x: (BOARD.WIDTH / 2) - 2,
     y: -1,
     color,
