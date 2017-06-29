@@ -10,7 +10,6 @@ const CLEAR_ROWS = 'CLEAR_ROWS'
 function initializeGrid () {
   return new Array(20).fill(initializeGridRow())
 }
-
 export default function grid (state = initializeGrid(), action) {
   let newGrid
   switch (action.type) {
@@ -37,24 +36,11 @@ export const getGrid = state => state.grid
 export function clearCompletedRows () {
   return (dispatch, getState) => {
     const grid = getGrid(getState())
-    const rowsToClear = []
-    let consecutive = 0
-    let previousIndex = -1
-    grid.forEach((row, i) => {
-      const cleared = grid[i].every(x => x)
-      if (cleared) {
-        rowsToClear.push(i)
-        dispatch(incrementLines())
-      }
-      if (cleared && previousIndex + 1 === i) {
-        consecutive += 1
-      }
-      if ((!cleared || i === 19) && consecutive > 0) {
-        dispatch(addPoints(POINTS[consecutive]))
-        consecutive = 0
-      }
-      previousIndex = i
-    })
+    const rowsToClear = grid
+      .map((row, i) => i)
+      .filter(i => grid[i].every(x => x))
+    rowsToClear.forEach(() => dispatch(incrementLines()))
+    dispatch(addPoints(POINTS[rowsToClear.length]))
     dispatch({ type: CLEAR_ROWS, rowsToClear })
   }
 }
