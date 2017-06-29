@@ -21,6 +21,7 @@ function initializeState () {
   const nextTetromino = generateRandomTetromino(tetromino.index)
   return { ...tetromino, nextTetromino }
 }
+
 export default function tetromino (state = initializeState(), action) {
   switch (action.type) {
     case MOVE_LEFT:
