@@ -1,7 +1,7 @@
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { fetchLocalHighScore } from './score'
+import { fetchLocalHighScore, getDropSpeedInMS } from './score'
 import { isGameStarted, resizeGame, setIsSoftDropping, startGame } from './gameInfo'
 import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
 
@@ -14,16 +14,18 @@ store.subscribe(() => {
 
 dispatch(resizeGame())
 dispatch(fetchLocalHighScore())
-
-setInterval(() => {
-  if (isGameStarted(store.getState())) {
-    dispatch(moveDown())
-  }
-}, 2000) // level 0: 48 frames per block @ 24fps = 2000 ms
+movePieceDownAutomatically()
 
 window.addEventListener('resize', () => dispatch(resizeGame()))
 document.addEventListener('keydown', handleKeyDown)
 document.addEventListener('keyup', handleKeyUp)
+
+function movePieceDownAutomatically () {
+  if (isGameStarted(store.getState())) {
+    dispatch(moveDown())
+  }
+  setTimeout(movePieceDownAutomatically, getDropSpeedInMS(store.getState()))
+}
 
 function handleKeyDown (e) {
   if (!isGameStarted(store.getState())) {
