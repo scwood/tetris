@@ -1,9 +1,10 @@
 import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
-import { getCurrentScore, getHighScore, getLevel, getNumberOfLines } from './score'
+import { getCurrentScore, getHighScore, getNumberOfLines } from './score'
 import { getGrid } from './grid'
-import { getTetromino, getNextTetromino } from './tetromino'
-import { isGameStarted, isGameOver, getWidth, getHeight } from './gameInfo'
+import { getHeight, getWidth, isGameOver, isGameStarted } from './gameInfo'
+import { getCurrentLevel } from './level'
+import { getNextTetromino, getTetromino } from './tetromino'
 
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
@@ -57,7 +58,7 @@ function drawInfo (state) {
   drawInfoElement(`High Score: ${getHighScore(state)}`, actual(1))
   drawInfoElement(`Score: ${getCurrentScore(state)}`, actual(3))
   drawInfoElement(`Lines: ${getNumberOfLines(state)}`, actual(4))
-  drawInfoElement(`Level: ${getLevel(state)}`, actual(5))
+  drawInfoElement(`Level: ${getCurrentLevel(state)}`, actual(5))
   if (isGameStarted(state)) {
     const nextTetromino = getNextTetromino(state)
     drawInfoElement(`Next piece:`, actual(7))
