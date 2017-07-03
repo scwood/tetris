@@ -117,6 +117,9 @@ function isValidPlacement (tetromino, grid) {
 
 function hasHitBottom (tetromino, grid) {
   return someBlock(tetromino, (x, y) => {
+    if (y < 0) {
+      return false
+    }
     return y === BOARD.HEIGHT - 1 || grid[y + 1][x]
   })
 }
@@ -147,8 +150,8 @@ function generateRandomTetromino (previousIndex) {
   const rotation = rotations[0]
   return {
     index: newIndex,
-    x: (BOARD.WIDTH / 2) - 2,
-    y: -1,
+    x: 3,
+    y: -2,
     color,
     rotation
   }

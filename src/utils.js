@@ -22,9 +22,10 @@ function generateBlocks ({ rotation, x, y }) {
     if (rotation & bit) {
       blocks.push([x + col, y + row])
     }
-    if (++col === 4) {
+    col++
+    if (col === 4) {
       col = 0
-      ++row
+      row++
     }
   }
   return blocks
