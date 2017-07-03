@@ -1,6 +1,6 @@
 import { END_GAME } from './gameInfo'
-import { TETROMINOS, POINTS } from './constants'
-import { addPoints, incrementLines } from './score'
+import { TETROMINOS } from './constants'
+import { calculateAndAddPoints, incrementLines } from './score'
 import { forEachBlock } from './utils'
 import { getTetromino } from './tetromino'
 
@@ -10,6 +10,7 @@ const CLEAR_ROWS = 'CLEAR_ROWS'
 function initializeGrid () {
   return new Array(20).fill(initializeGridRow())
 }
+
 export default function grid (state = initializeGrid(), action) {
   let newGrid
   switch (action.type) {
@@ -39,8 +40,8 @@ export function clearCompletedRows () {
     const rowsToClear = grid
       .map((row, i) => i)
       .filter(i => grid[i].every(x => x))
+    dispatch(calculateAndAddPoints(rowsToClear.length))
     rowsToClear.forEach(() => dispatch(incrementLines()))
-    dispatch(addPoints(POINTS[rowsToClear.length]))
     dispatch({ type: CLEAR_ROWS, rowsToClear })
   }
 }

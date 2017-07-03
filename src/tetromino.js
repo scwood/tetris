@@ -1,14 +1,7 @@
-import { TETROMINOS, BOARD } from './constants'
+import { BOARD, TETROMINOS } from './constants'
 import { addTetrominoToGrid, clearCompletedRows, getGrid } from './grid'
-import { getRandomInt, everyBlock, someBlock } from './utils'
-import { addPoints } from './score'
-import {
-  endGame,
-  getSpacesSoftDropped,
-  incrementSpacesSoftDropped,
-  isSoftDropping,
-  resetSpacesSoftDropped
-} from './gameInfo'
+import { everyBlock, getRandomInt, someBlock } from './utils'
+import { endGame, incrementSpacesSoftDropped, isSoftDropping } from './gameInfo'
 
 const MOVE_DOWN = 'MOVE_DOWN'
 const MOVE_LEFT = 'MOVE_LEFT'
@@ -31,10 +24,9 @@ export default function tetromino (state = initializeState(), action) {
     case MOVE_DOWN:
       return { ...state, y: state.y + 1 }
     case ADD_NEW_TETROMINO:
-      const nextTetromino = state.nextTetromino
       return {
-        ...nextTetromino,
-        nextTetromino: generateRandomTetromino(nextTetromino.index)
+        ...state.nextTetromino,
+        nextTetromino: action.nextTetromino
       }
     case ROTATE:
       return { ...state, rotation: action.rotation }
@@ -57,10 +49,7 @@ export function moveDown () {
       }
       dispatch(addTetrominoToGrid())
       dispatch(clearCompletedRows())
-      const spacesSoftDropped = getSpacesSoftDropped(getState())
-      dispatch(addPoints(spacesSoftDropped))
-      dispatch(resetSpacesSoftDropped())
-      dispatch({ type: ADD_NEW_TETROMINO })
+      dispatch(addNewTetromino())
       return
     }
     if (isValidPlacement({ ...tetromino, y: tetromino.y + 1 }, grid)) {
@@ -100,6 +89,14 @@ export function rotate () {
     if (isValidPlacement({ ...tetromino, rotation: newRotation }, grid)) {
       dispatch({ type: ROTATE, rotation: newRotation })
     }
+  }
+}
+
+function addNewTetromino () {
+  return (dispatch, getState) => {
+    const { index } = getNextTetromino(getState())
+    const nextTetromino = generateRandomTetromino(index)
+    dispatch({ type: ADD_NEW_TETROMINO, nextTetromino })
   }
 }
 

@@ -1,5 +1,10 @@
-import { START_GAME } from './gameInfo'
-import { canAdvanceToNextLevel, incrementLevel } from './level'
+import { canAdvanceToNextLevel, getCurrentLevel, incrementLevel } from './level'
+import {
+  getSpacesSoftDropped,
+  resetSpacesSoftDropped,
+  START_GAME
+} from './gameInfo'
+import { POINTS } from './constants'
 
 const ADD_POINTS = 'ADD_POINTS'
 const INCREMENT_LINES = 'INCREMENT_LINES'
@@ -34,6 +39,17 @@ export function fetchLocalHighScore () {
   return dispatch => {
     const localHighScore = getLocalHighScore()
     dispatch(updateHighScore(localHighScore))
+  }
+}
+
+export function calculateAndAddPoints (numberOfRowsCleared) {
+  return (dispatch, getState) => {
+    let pointsEarned = 0
+    const level = getCurrentLevel(getState())
+    pointsEarned += POINTS[numberOfRowsCleared] * (level + 1)
+    pointsEarned += getSpacesSoftDropped(getState())
+    dispatch(addPoints(pointsEarned))
+    dispatch(resetSpacesSoftDropped())
   }
 }
 

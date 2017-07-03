@@ -19,7 +19,7 @@ export default function gameInfo (state = initialState, action) {
     case START_GAME:
       return { ...state, started: true, gameOver: false }
     case END_GAME:
-      return { ...state, started: false, gameOver: true, softDrop: false }
+      return { ...state, started: false, gameOver: true, isSoftDropping: false }
     case RESIZE_GAME:
       return { ...state, width: action.width, height: action.height }
     case SET_IS_SOFT_DROPPING:
