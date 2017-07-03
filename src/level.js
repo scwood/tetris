@@ -36,7 +36,7 @@ export function canAdvanceToNextLevel (state) {
 }
 
 export function getDropSpeedInMS (state) {
-  const framesPerSecond = 24
+  const framesPerSecond = 60
   const level = getCurrentLevel(state)
   let framesPerGridCell = 48
   if (level <= 8) {
@@ -54,6 +54,7 @@ export function getDropSpeedInMS (state) {
   } else {
     framesPerGridCell = 1
   }
+  framesPerGridCell += 1 // add one frame for the 'drop'
   return (framesPerGridCell / framesPerSecond) * 1000
 }
 
