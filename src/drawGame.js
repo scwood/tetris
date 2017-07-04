@@ -28,7 +28,7 @@ function drawStartScreen (state) {
   ctx.fillStyle = 'black'
   ctx.fillText('Press <space> to start', actual(1.7), actual(HEIGHT) / 2.07)
   if (isGameOver(state)) {
-    ctx.fillText('Game over', actual(3.7), (actual(HEIGHT) / 4.3))
+    ctx.fillText('Game over', actual(3.65), (actual(HEIGHT) / 4.3))
   }
 }
 

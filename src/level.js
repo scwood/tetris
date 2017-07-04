@@ -1,3 +1,4 @@
+import { START_GAME, END_GAME } from './gameInfo'
 import { getNumberOfLines } from './score'
 
 const INCREMENT_CURRENT_LEVEL = 'INCREMENT_CURRENT_LEVEL'
@@ -11,6 +12,10 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case INCREMENT_CURRENT_LEVEL:
       return { ...state, current: state.current + 1 }
+    case START_GAME:
+      return { ...state, current: state.starting }
+    case END_GAME:
+      return { ...state, starting: 0 }
     default:
       return state
   }
