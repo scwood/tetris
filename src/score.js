@@ -98,10 +98,14 @@ export function updateHighScores () {
       setLocalHighScore(currentScore)
       dispatch(updateHighScore(currentScore))
     }
+    const capturedName = window.prompt('What is your name?').trim()
+    const name = capturedName !== null && capturedName !== ''
+      ? capturedName
+      : 'Anonymous'
     firebase.database().ref('/highScores').push({
       score: currentScore,
       level: getCurrentLevel(getState()),
-      name: window.prompt('What is your name?')
+      name
     })
       .then(() => {
         dispatch(fetchGlobalHighScores())
