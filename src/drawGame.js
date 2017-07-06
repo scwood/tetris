@@ -1,6 +1,6 @@
 import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
-import { getCurrentScore, getHighScore, getNumberOfLines } from './score'
+import * as score from './score'
 import { getGrid } from './grid'
 import { getHeight, getWidth, isGameOver, isGameStarted } from './gameInfo'
 import { getCurrentLevel } from './level'
@@ -45,9 +45,6 @@ function drawCurrentTetromino (state) {
   drawTetromino(tetromino)
 }
 
-function drawNextTetromino (state) {
-}
-
 function drawTetromino (tetromino) {
   forEachBlock(tetromino, (x, y) => {
     drawGridSquare(x, y, tetromino.color)
@@ -55,16 +52,30 @@ function drawTetromino (tetromino) {
 }
 
 function drawInfo (state) {
-  drawInfoElement(`High Score: ${getHighScore(state)}`, actual(1))
-  drawInfoElement(`Score: ${getCurrentScore(state)}`, actual(3))
-  drawInfoElement(`Lines: ${getNumberOfLines(state)}`, actual(4))
+  drawInfoElement(`High Score: ${score.getHighScore(state)}`, actual(1))
+  drawInfoElement(`Score: ${score.getCurrentScore(state)}`, actual(3))
+  drawInfoElement(`Lines: ${score.getNumberOfLines(state)}`, actual(4))
   drawInfoElement(`Level: ${getCurrentLevel(state)}`, actual(5))
   if (isGameStarted(state)) {
     const nextTetromino = getNextTetromino(state)
     drawInfoElement(`Next piece:`, actual(7))
-    drawTetromino({ ...nextTetromino, x: 10.7, y: 7 })
-    drawNextTetromino(state)
+    // special case the I piece because it's long
+    if (nextTetromino.index === 0) {
+      drawTetromino({ ...nextTetromino, x: 10.7, y: 6 })
+    } else {
+      drawTetromino({ ...nextTetromino, x: 9.7, y: 6 })
+    }
+  } else {
+    drawInfoElement('Global High Scores:', actual(7))
+    const globalHighScores = score.getSortedGlobalHighScores(state)
+    globalHighScores.forEach(({ name, score, level }, i) => {
+      drawInfoElement(highScoreTemplate(i, name, score, level), actual(8 + i))
+    })
   }
+}
+
+function highScoreTemplate (number, name, score, level) {
+  return `${number + 1}. ${score} points, level ${level} - ${name}`
 }
 
 function drawInfoElement (text, y) {

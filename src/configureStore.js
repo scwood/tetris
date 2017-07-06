@@ -18,6 +18,6 @@ const rootReducer = combineReducers({
 export default function configureStore () {
   return createStore(
     rootReducer,
-    applyMiddleware(thunk /*, logger */)
+    applyMiddleware(thunk/*, logger */)
   )
 }

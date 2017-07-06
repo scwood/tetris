@@ -1,3 +1,5 @@
+import { updateHighScores } from './score'
+
 export const END_GAME = 'END_GAME'
 export const START_GAME = 'START_GAME'
 const RESIZE_GAME = 'RESIZE_GAME'
@@ -51,7 +53,10 @@ export function startGame () {
 }
 
 export function endGame () {
-  return { type: END_GAME }
+  return dispatch => {
+    dispatch(updateHighScores())
+    dispatch({ type: END_GAME })
+  }
 }
 
 export function setIsSoftDropping (isSoftDropping) {

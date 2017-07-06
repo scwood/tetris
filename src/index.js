@@ -1,15 +1,18 @@
+import * as firebase from 'firebase'
+import * as gameInfo from './gameInfo'
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { fetchLocalHighScore } from './score'
+import { fetchLocalHighScore, fetchGlobalHighScores } from './score'
 import { getDropSpeedInMS } from './level'
-import {
-  isGameStarted,
-  resizeGame,
-  setIsSoftDropping,
-  startGame
-} from './gameInfo'
 import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyBKR3W8dwyU_XdpE9yWIoSFfP6_mIacJkc',
+  databaseURL: 'https://tetris-ccabb.firebaseio.com',
+  projectId: 'tetris-ccabb'
+}
+firebase.initializeApp(firebaseConfig)
 
 const store = configureStore()
 const { dispatch } = store
@@ -18,25 +21,26 @@ store.subscribe(() => {
   drawGame(store.getState())
 })
 
-dispatch(resizeGame())
+dispatch(gameInfo.resizeGame())
 dispatch(fetchLocalHighScore())
-movePieceDownAutomatically()
+dispatch(fetchGlobalHighScores())
+start()
 
-window.addEventListener('resize', () => dispatch(resizeGame()))
+window.addEventListener('resize', () => dispatch(gameInfo.resizeGame()))
 document.addEventListener('keydown', handleKeyDown)
 document.addEventListener('keyup', handleKeyUp)
 
-function movePieceDownAutomatically () {
-  if (isGameStarted(store.getState())) {
+function start () {
+  if (gameInfo.isGameStarted(store.getState())) {
     dispatch(moveDown())
   }
-  setTimeout(movePieceDownAutomatically, getDropSpeedInMS(store.getState()))
+  setTimeout(start, getDropSpeedInMS(store.getState()))
 }
 
 function handleKeyDown (e) {
-  if (!isGameStarted(store.getState())) {
+  if (!gameInfo.isGameStarted(store.getState())) {
     if (e.keyCode === KEY.SPACE) {
-      dispatch(startGame())
+      dispatch(gameInfo.startGame())
     }
     return
   }
@@ -49,7 +53,7 @@ function handleKeyDown (e) {
       break
     case KEY.DOWN:
       dispatch(moveDown())
-      dispatch(setIsSoftDropping(true))
+      dispatch(gameInfo.setIsSoftDropping(true))
       break
     case KEY.UP:
       dispatch(rotate())
@@ -58,7 +62,7 @@ function handleKeyDown (e) {
 }
 
 function handleKeyUp (e) {
-  if (isGameStarted(store.getState()) && e.keyCode === KEY.DOWN) {
-    dispatch(setIsSoftDropping(false))
+  if (gameInfo.isGameStarted(store.getState()) && e.keyCode === KEY.DOWN) {
+    dispatch(gameInfo.setIsSoftDropping(false))
   }
 }
