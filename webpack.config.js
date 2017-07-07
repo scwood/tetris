@@ -8,9 +8,6 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.[hash].js'
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist')
-  },
   devtool: 'source-map',
   module: {
     rules: [
