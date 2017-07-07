@@ -1,4 +1,4 @@
-public/bundle.js*
+public/bundle*
 node_modules
 npm-debug.log
 .idea
