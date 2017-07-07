@@ -10,6 +10,10 @@ const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 document.body.appendChild(canvas)
 
+document.body.style.padding = '10px'
+document.body.style.margin = '0px'
+canvas.style.display = 'block'
+
 const { WIDTH, HEIGHT } = BOARD
 let blockSize
 
