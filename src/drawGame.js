@@ -52,30 +52,46 @@ function drawTetromino (tetromino) {
 }
 
 function drawInfo (state) {
-  drawInfoElement(`High Score: ${score.getHighScore(state)}`, actual(1))
-  drawInfoElement(`Score: ${score.getCurrentScore(state)}`, actual(3))
+  const highScore = score.getHighScore(state).toLocaleString()
+  const currentScore = score.getCurrentScore(state).toLocaleString()
+  drawInfoElement(`High Score: ${highScore}`, actual(1))
+  drawInfoElement(`Score: ${currentScore}`, actual(3))
   drawInfoElement(`Lines: ${score.getNumberOfLines(state)}`, actual(4))
   drawInfoElement(`Level: ${getCurrentLevel(state)}`, actual(5))
   if (isGameStarted(state)) {
-    const nextTetromino = getNextTetromino(state)
-    drawInfoElement(`Next piece:`, actual(7))
-    // special case the I piece because it's long
-    if (nextTetromino.index === 0) {
-      drawTetromino({ ...nextTetromino, x: 10.7, y: 6 })
-    } else {
-      drawTetromino({ ...nextTetromino, x: 9.7, y: 6 })
-    }
+    drawNextTetromino(state)
   } else {
-    drawInfoElement('Global High Scores:', actual(7))
-    const globalHighScores = score.getSortedGlobalHighScores(state)
-    globalHighScores.forEach(({ name, score, level }, i) => {
-      drawInfoElement(highScoreTemplate(i, name, score, level), actual(8 + i))
-    })
+    drawHighScores(state)
   }
 }
 
-function highScoreTemplate (number, name, score, level) {
-  return `${number + 1}. ${score} points, level ${level} - ${name}`
+function drawNextTetromino (state) {
+  const nextTetromino = getNextTetromino(state)
+  drawInfoElement(`Next piece:`, actual(7))
+  // special case the I piece because it's long
+  if (nextTetromino.index === 0) {
+    drawTetromino({ ...nextTetromino, x: 10.7, y: 6 })
+  } else {
+    drawTetromino({ ...nextTetromino, x: 9.7, y: 6 })
+  }
+}
+
+function drawHighScores (state) {
+  const globalHighScores = score.getSortedGlobalHighScores(state)
+  if (globalHighScores.length === 0) {
+    return
+  }
+  drawInfoElement('Global High Scores:', actual(7))
+  const highScoreRows = globalHighScores
+    .map(({ score, level, name }, i) => {
+      return [`${i + 1}.`, score.toLocaleString(score), level, name]
+    })
+  highScoreRows.unshift(['', 'Score', 'Level', 'Name'])
+
+  const formattedRows = generateTableRows(highScoreRows)
+  formattedRows.forEach((row, i) => {
+    drawInfoElement(row, actual(8 + i))
+  })
 }
 
 function drawInfoElement (text, y) {
@@ -125,4 +141,27 @@ function resizeCanvas (canvas, state) {
 
 function actual (n) {
   return blockSize * n
+}
+
+function generateTableRows (rows) {
+  const columnWidths = []
+  rows.forEach(row => {
+    row.forEach((value, i) => {
+      if (
+        columnWidths[i] === undefined ||
+        columnWidths[i] < value.toString().length
+      ) {
+        columnWidths[i] = value.length
+      }
+    })
+  })
+  return rows.map(row => {
+    return row.map((value, i) => {
+      return rightPad(value, ' ', columnWidths[i])
+    }).join('  ')
+  })
+}
+
+function rightPad (str, char, length) {
+  return (str.toString() + char.repeat(length)).substr(0, length)
 }
