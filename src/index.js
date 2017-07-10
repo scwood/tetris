@@ -4,7 +4,7 @@ import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
 import { fetchLocalHighScore, fetchGlobalHighScores } from './models/score'
-import { getDropSpeedInMS } from './models/level'
+import { getDropSpeedInMS, getCurrentLevel, incrementStartingLevel } from './models/level'
 import { moveDown, moveLeft, moveRight, rotate } from './models/tetromino'
 
 const firebaseConfig = {
@@ -24,6 +24,7 @@ store.subscribe(() => {
 dispatch(gameInfo.resizeGame())
 dispatch(fetchLocalHighScore())
 dispatch(fetchGlobalHighScores())
+console.log("Press 'i' to increase starting level")
 start()
 
 window.addEventListener('resize', () => dispatch(gameInfo.resizeGame()))
@@ -38,26 +39,32 @@ function start () {
 }
 
 function handleKeyDown (e) {
-  if (!gameInfo.isGameStarted(store.getState())) {
-    if (e.keyCode === KEY.SPACE) {
-      dispatch(gameInfo.startGame())
+  const isGameStarted = gameInfo.isGameStarted(store.getState())
+  if (isGameStarted) {
+    switch (e.keyCode) {
+      case KEY.LEFT:
+        dispatch(moveLeft())
+        break
+      case KEY.RIGHT:
+        dispatch(moveRight())
+        break
+      case KEY.DOWN:
+        dispatch(moveDown())
+        dispatch(gameInfo.setIsSoftDropping(true))
+        break
+      case KEY.UP:
+        dispatch(rotate())
+        break
     }
-    return
-  }
-  switch (e.keyCode) {
-    case KEY.LEFT:
-      dispatch(moveLeft())
-      break
-    case KEY.RIGHT:
-      dispatch(moveRight())
-      break
-    case KEY.DOWN:
-      dispatch(moveDown())
-      dispatch(gameInfo.setIsSoftDropping(true))
-      break
-    case KEY.UP:
-      dispatch(rotate())
-      break
+  } else {
+    switch (e.keyCode) {
+      case KEY.SPACE:
+        dispatch(gameInfo.startGame())
+        break
+      case KEY.I:
+        dispatch(incrementStartingLevel())
+        break
+    }
   }
 }
 

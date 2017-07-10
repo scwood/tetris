@@ -3,7 +3,7 @@ import { forEachBlock } from './utils'
 import * as score from './models/score'
 import { getGrid } from './models/grid'
 import { getHeight, getWidth, isGameOver, isGameStarted } from './models/gameInfo'
-import { getCurrentLevel } from './models/level'
+import { getCurrentLevel, getStartingLevel } from './models/level'
 import { getNextTetromino, getTetromino } from './models/tetromino'
 
 const canvas = document.createElement('canvas')
@@ -58,10 +58,21 @@ function drawTetromino (tetromino) {
 function drawInfo (state) {
   const highScore = score.getHighScore(state).toLocaleString()
   const currentScore = score.getCurrentScore(state).toLocaleString()
+  const currentLevel = getCurrentLevel(state)
+  const startingLevel = getStartingLevel(state)
+  let displayedLevel
+  if (
+    (startingLevel > currentLevel) ||
+    (isGameOver(state) && startingLevel > 0)
+  ) {
+    displayedLevel = startingLevel
+  } else {
+    displayedLevel = currentLevel
+  }
   drawInfoElement(`High Score: ${highScore}`, actual(1))
   drawInfoElement(`Score: ${currentScore}`, actual(3))
   drawInfoElement(`Lines: ${score.getNumberOfLines(state)}`, actual(4))
-  drawInfoElement(`Level: ${getCurrentLevel(state)}`, actual(5))
+  drawInfoElement(`Level: ${displayedLevel}`, actual(5))
   if (isGameStarted(state)) {
     drawNextTetromino(state)
   } else {

@@ -1,7 +1,9 @@
 import { START_GAME, END_GAME } from './gameInfo'
+
 import { getNumberOfLines } from './score'
 
 const INCREMENT_CURRENT_LEVEL = 'INCREMENT_CURRENT_LEVEL'
+const INCREMENT_STARTING_LEVEL = 'INCREMENT_STARTING_LEVEL'
 
 const initialState = {
   current: 0,
@@ -12,6 +14,8 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case INCREMENT_CURRENT_LEVEL:
       return { ...state, current: state.current + 1 }
+    case INCREMENT_STARTING_LEVEL:
+      return { ...state, starting: state.starting + 1 }
     case START_GAME:
       return { ...state, current: state.starting }
     case END_GAME:
@@ -63,6 +67,14 @@ export function getDropSpeedInMS (state) {
   return (framesPerGridCell / framesPerSecond) * 1000
 }
 
-export function incrementLevel () {
+export function incrementCurrentLevel () {
   return { type: INCREMENT_CURRENT_LEVEL }
+}
+
+export function incrementStartingLevel () {
+  return (dispatch, getState) => {
+    if (getStartingLevel(getState()) < 18) {
+      dispatch({ type: INCREMENT_STARTING_LEVEL })
+    }
+  }
 }
