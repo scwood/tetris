@@ -1,10 +1,10 @@
 import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
-import * as score from './score'
-import { getGrid } from './grid'
-import { getHeight, getWidth, isGameOver, isGameStarted } from './gameInfo'
-import { getCurrentLevel } from './level'
-import { getNextTetromino, getTetromino } from './tetromino'
+import * as score from './models/score'
+import { getGrid } from './models/grid'
+import { getHeight, getWidth, isGameOver, isGameStarted } from './models/gameInfo'
+import { getCurrentLevel } from './models/level'
+import { getNextTetromino, getTetromino } from './models/tetromino'
 
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')

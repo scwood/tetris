@@ -1,7 +1,7 @@
 import { END_GAME } from './gameInfo'
-import { TETROMINOS } from './constants'
+import { TETROMINOS } from '../constants'
 import { calculateAndAddPoints, incrementLines } from './score'
-import { forEachBlock } from './utils'
+import { forEachBlock } from '../utils'
 import { getTetromino } from './tetromino'
 
 const SET_GRID_COLOR = 'SET_GRID_COLOR'

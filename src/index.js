@@ -1,11 +1,11 @@
 import * as firebase from 'firebase'
-import * as gameInfo from './gameInfo'
+import * as gameInfo from './models/gameInfo'
 import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { fetchLocalHighScore, fetchGlobalHighScores } from './score'
-import { getDropSpeedInMS } from './level'
-import { moveDown, moveLeft, moveRight, rotate } from './tetromino'
+import { fetchLocalHighScore, fetchGlobalHighScores } from './models/score'
+import { getDropSpeedInMS } from './models/level'
+import { moveDown, moveLeft, moveRight, rotate } from './models/tetromino'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBKR3W8dwyU_XdpE9yWIoSFfP6_mIacJkc',

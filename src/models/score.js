@@ -1,7 +1,7 @@
 import * as firebase from 'firebase'
 import * as gameInfo from './gameInfo'
 import { canAdvanceToNextLevel, getCurrentLevel, incrementLevel } from './level'
-import { POINTS } from './constants'
+import { POINTS } from '../constants'
 
 const ADD_POINTS = 'ADD_POINTS'
 const INCREMENT_LINES = 'INCREMENT_LINES'
