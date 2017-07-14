@@ -1,6 +1,6 @@
 # Tetris
 
-![Tetris gameplay](https://media.giphy.com/media/3o7buibson9SLQEUsU/giphy.gif)
+![Tetris gameplay](https://media.giphy.com/media/xUOrwqYyUxJert1Gow/giphy.gif)
 
 ## Play it
 
