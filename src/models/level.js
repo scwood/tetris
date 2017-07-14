@@ -73,7 +73,7 @@ export function incrementCurrentLevel () {
 
 export function incrementStartingLevel () {
   return (dispatch, getState) => {
-    if (getStartingLevel(getState()) < 18) {
+    if (getStartingLevel(getState()) < 19) {
       dispatch({ type: INCREMENT_STARTING_LEVEL })
     }
   }

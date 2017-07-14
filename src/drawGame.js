@@ -30,9 +30,10 @@ export default function drawGame (state) {
 
 function drawStartScreen (state) {
   ctx.fillStyle = 'black'
-  ctx.fillText('Press <space> to start', actual(1.7), actual(HEIGHT) / 2.07)
+  ctx.fillText('Press <space> to start', actual(1.7), actual(9.65))
+  ctx.fillText('Press <i> to increase level', actual(0.95), actual(10.65))
   if (isGameOver(state)) {
-    ctx.fillText('Game over', actual(3.65), (actual(HEIGHT) / 4.3))
+    ctx.fillText('Game over', actual(3.65), actual(4.65))
   }
 }
 
@@ -104,9 +105,9 @@ function drawHighScores (state) {
   highScoreRows.unshift(['', 'Score', 'Level', 'Name'])
 
   const formattedRows = generateTableRows(highScoreRows)
-  formattedRows.forEach((row, i) => {
-    drawInfoElement(row, actual(8 + i))
-  })
+  for (let i = 0; i < 11; i++) { // 11 rows including header
+    drawInfoElement(formattedRows[i], actual(8 + i))
+  }
 }
 
 function drawInfoElement (text, y) {
