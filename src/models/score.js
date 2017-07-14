@@ -1,7 +1,8 @@
 import * as firebase from 'firebase'
 import * as gameInfo from './gameInfo'
-import { canAdvanceToNextLevel, getCurrentLevel, incrementCurrentLevel } from './level'
+import * as level from './level'
 import { POINTS } from '../constants'
+import { stringValueOf } from '../utils'
 
 const ADD_POINTS = 'ADD_POINTS'
 const INCREMENT_LINES = 'INCREMENT_LINES'
@@ -56,9 +57,9 @@ export function fetchLocalHighScore () {
 
 export function calculateAndAddPoints (numberOfRowsCleared) {
   return (dispatch, getState) => {
+    const currentLevel = level.getCurrentLevel(getState())
     let pointsEarned = 0
-    const level = getCurrentLevel(getState())
-    pointsEarned += POINTS[numberOfRowsCleared] * (level + 1)
+    pointsEarned += POINTS[numberOfRowsCleared] * (currentLevel + 1)
     pointsEarned += gameInfo.getSpacesSoftDropped(getState())
     dispatch(addPoints(pointsEarned))
     dispatch(gameInfo.resetSpacesSoftDropped())
@@ -68,8 +69,8 @@ export function calculateAndAddPoints (numberOfRowsCleared) {
 export function incrementLines () {
   return (dispatch, getState) => {
     dispatch({ type: INCREMENT_LINES })
-    if (canAdvanceToNextLevel(getState())) {
-      dispatch(incrementCurrentLevel())
+    if (level.canAdvanceToNextLevel(getState())) {
+      dispatch(level.incrementCurrentLevel())
     }
   }
 }
@@ -98,21 +99,18 @@ export function updateHighScores () {
       setLocalHighScore(currentScore)
       dispatch(updateHighScore(currentScore))
     }
-    let name = window.prompt('Enter your name:')
-    if (name === null || name === undefined) {
-      name = ''
-    }
+    const localName = getLocalName()
+    let name = stringValueOf(window.prompt('Enter your name:', localName))
     name = name.trim()
+    setLocalName(name)
     name = name === '' ? 'Anonymous' : name
     firebase.database().ref('/highScores').push({
       score: currentScore,
-      level: getCurrentLevel(getState()),
+      level: level.getCurrentLevel(getState()),
       name
     })
-      .then(() => {
-        dispatch(fetchGlobalHighScores())
-      })
-      .catch()
+      .then(() => dispatch(fetchGlobalHighScores()))
+      .catch(error => console.error(error))
   }
 }
 
@@ -127,4 +125,12 @@ function getLocalHighScore () {
 
 function setLocalHighScore (score) {
   window.localStorage.setItem('highScore', score)
+}
+
+function getLocalName () {
+  return stringValueOf(window.localStorage.getItem('name'))
+}
+
+function setLocalName (name) {
+  window.localStorage.setItem('name', name)
 }

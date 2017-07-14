@@ -14,7 +14,7 @@ document.body.style.padding = '10px'
 document.body.style.margin = '0px'
 canvas.style.display = 'block'
 
-const { WIDTH, HEIGHT } = BOARD
+const { WIDTH } = BOARD
 let blockSize
 
 export default function drawGame (state) {

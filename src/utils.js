@@ -14,6 +14,13 @@ export function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+export function stringValueOf (x) {
+  if (x === null || x === undefined) {
+    return ''
+  }
+  return String(x)
+}
+
 function generateBlocks ({ rotation, x, y }) {
   const blocks = []
   let row = 0

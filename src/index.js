@@ -24,7 +24,6 @@ store.subscribe(() => {
 dispatch(gameInfo.resizeGame())
 dispatch(fetchLocalHighScore())
 dispatch(fetchGlobalHighScores())
-console.log("Press 'i' to increase starting level")
 start()
 
 window.addEventListener('resize', () => dispatch(gameInfo.resizeGame()))
