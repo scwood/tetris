@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - '7'
+env:
+  global:
+    - AWS_ACCESS_KEY_ID=AKIAIXOFIDNR7BVDU3BA
+    - secure: nPw2Tmohd6hyIjlGwPHy89QujQJVzPOgyYkP9Ha+yKdmOiOMYTVH73MEreSey0VlynBXHoUnHl4vksjce7B3D+YcdofnMbVu6Rv/oVCbiANJ/OVrADh0uq5q4ue08T3D9re5mjJ5WaeNEzei+eMubt3fnQse0snjVK9gZyh2rmq8d7enjsWtU6Rt4BK2FLuPvv/4hea1T+yRde31Lsjwwfcb59vpKx/VNxruOjteTraUjAPIiEGYDx2CeUsaP7e8pXUiDW7ZA35JZVseYvTVpvzF+22mjgST3UHAuRll5/akduQfnV/aRMkEx6MRAl/PzYFs6xtYmsWyBzZY7J/iAzR6NfU53G1r/J0jGTEKRwk99LxMcgThTe3cmu1Qt/+MER2AwNqoi4Cbv4sxxyoMcrijti2rNKFl53IX6sKHbOsZS718LwgATU+GSmnxjXWRlnLWDUviHZJljyJAjqVGZw/9ozt5v/dccziF8nZvDCLBQ2wF0rk5OE0y7iDo4FqHZM8timdxliwhqXi6yee/Xqn+JZLdSkHIRElwnFezmF3bForahV0Krcx/gINaESY37VpnePzTsMbZ1NoSlYP/MptadtAcxYyR0rbueecxvyQxc3SjNqZ9mVvQWyTSWB+2HdtTIAub10vw5DHCkk/goBMrgh6/GpWSKpI+gX7ZGcM=
 install:
   - npm install
 script:
@@ -10,11 +14,7 @@ before_deploy:
   - pip install --user awscli
 deploy:
   provider: script
-  script: aws s3 sync dist s3://spencercwood-tetris --delete
+  script: aws s3 sync dist s3://spencercwood-tetris --delete --acl public-read
   skip_cleanup: true
   on:
     branch: master
-env:
-  global:
-    - AWS_ACCESS_KEY_ID=AKIAIXOFIDNR7BVDU3BA
-    - secure: nPw2Tmohd6hyIjlGwPHy89QujQJVzPOgyYkP9Ha+yKdmOiOMYTVH73MEreSey0VlynBXHoUnHl4vksjce7B3D+YcdofnMbVu6Rv/oVCbiANJ/OVrADh0uq5q4ue08T3D9re5mjJ5WaeNEzei+eMubt3fnQse0snjVK9gZyh2rmq8d7enjsWtU6Rt4BK2FLuPvv/4hea1T+yRde31Lsjwwfcb59vpKx/VNxruOjteTraUjAPIiEGYDx2CeUsaP7e8pXUiDW7ZA35JZVseYvTVpvzF+22mjgST3UHAuRll5/akduQfnV/aRMkEx6MRAl/PzYFs6xtYmsWyBzZY7J/iAzR6NfU53G1r/J0jGTEKRwk99LxMcgThTe3cmu1Qt/+MER2AwNqoi4Cbv4sxxyoMcrijti2rNKFl53IX6sKHbOsZS718LwgATU+GSmnxjXWRlnLWDUviHZJljyJAjqVGZw/9ozt5v/dccziF8nZvDCLBQ2wF0rk5OE0y7iDo4FqHZM8timdxliwhqXi6yee/Xqn+JZLdSkHIRElwnFezmF3bForahV0Krcx/gINaESY37VpnePzTsMbZ1NoSlYP/MptadtAcxYyR0rbueecxvyQxc3SjNqZ9mVvQWyTSWB+2HdtTIAub10vw5DHCkk/goBMrgh6/GpWSKpI+gX7ZGcM=
