@@ -1,10 +1,12 @@
 language: node_js
 node_js:
-- '7'
+  - '7'
 install:
-- npm install
+  - npm install
 script:
-- npm run lint
+  - npm run lint
+before_deploy:
+  - npm run build
 deploy:
   provider: s3
   access_key_id: AKIAIXOFIDNR7BVDU3BA
@@ -14,5 +16,3 @@ deploy:
   local-dir: dist
   acl: public_read
   skip_cleanup: true
-  on:
-    repo: scwood/tetris
