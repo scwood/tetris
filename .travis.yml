@@ -13,5 +13,6 @@ deploy:
   bucket: G4SPreVzoIy+RgswnfuNZUgchimAoppDcLM/enlispencercwood-tetris
   local-dir: dist
   acl: public_read
+  skip_cleanup: true
   on:
     repo: scwood/tetris
