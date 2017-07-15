@@ -1,7 +1,17 @@
 language: node_js
 node_js:
-  - "7"
+- '7'
 install:
-  - npm install
+- npm install
 script:
-  - npm run lint
+- npm run lint
+deploy:
+  provider: s3
+  access_key_id: AKIAIXOFIDNR7BVDU3BA
+  secret_access_key:
+    secure: roYKoPCQDQoLeXREn0ODGwBqzlVZpQqmtp9iVUxKmn2oFOWQxBhpvOV/6rir76dj0zMuWNtMMfuhVoE/Soxs5lpAthynlfJeVDCquMvyROgNPImhXYZn1O2F/Whe84qKu6N0viYYySVTs1xpjsn5YZLXntDYgkQFNx5Z2NiJLg7HShtSOX+M260Fue9nrc5kpqHrWXyHtdhYin+oygz1xhABN3Uf2TWhs4n+6MPcMwAA29Bq1dEZw5IKVDzYCRvqklopz5ltZoFbbWKfZp15suY6e79rFXBbzSA1HmfkDj/CgqSEe62Rmt6TMUKX46oTHGLZg1k+8kuy68IXHSs4Vafgdxu2SrmgI8FbZsj6iAXJWWKDJdINNtkjtPhIhmQYQa/0E7cVLTeHIBR5v6CU1VKA666PcIMzvhbYWJHUjs5EsiU5kT05K3tKfuIdHFlsz/PsZF7+1Bv6t53x9Chcg/JGxUMApm09jeMBruryF9ayWCNVXjudDafxbDAGTs1Fr47mRUrFCivFn6Y/USh1HxP91n+2T3WuEtJtzE0bXdFBYZ/uRi37rY/wMfL+C4B4dM7p7405Vmml2qLiDMjtByttQpOccUAjfEha9Jxt5LwEWvI3Bbb4ZbTd9CiEF7GWY/NEUU4IVyqjjJBgc7HwxFCWBTBe7OTnqG+mcp25VHY=
+  bucket: G4SPreVzoIy+RgswnfuNZUgchimAoppDcLM/enlispencercwood-tetris
+  local-dir: dist
+  acl: public_read
+  on:
+    repo: scwood/tetris
