@@ -14,7 +14,7 @@ before_deploy:
   - pip install --user awscli
 deploy:
   provider: script
-  script: aws s3 sync dist s3://spencercwood-tetris --delete --acl public-read
+  script: aws s3 sync dist s3://scwood-tetris --delete --acl public-read
   skip_cleanup: true
   on:
     branch: master
