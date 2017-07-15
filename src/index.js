@@ -7,6 +7,8 @@ import { fetchLocalHighScore, fetchGlobalHighScores } from './models/score'
 import { getDropSpeedInMS, incrementStartingLevel } from './models/level'
 import { moveDown, moveLeft, moveRight, rotate } from './models/tetromino'
 
+console.log('Hello world')
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBKR3W8dwyU_XdpE9yWIoSFfP6_mIacJkc',
   databaseURL: 'https://tetris-ccabb.firebaseio.com',
