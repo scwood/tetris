@@ -2,7 +2,8 @@
   "scripts": {
     "build": "webpack -p",
     "start": "webpack-dev-server",
-    "lint": "standard --fix"
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

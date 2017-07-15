@@ -1,9 +1,9 @@
+import * as score from './models/score'
 import { BOARD, COLORS } from './constants'
 import { forEachBlock } from './utils'
-import * as score from './models/score'
+import { getCurrentLevel, getStartingLevel } from './models/level'
 import { getGrid } from './models/grid'
 import { getHeight, getWidth, isGameOver, isGameStarted } from './models/gameInfo'
-import { getCurrentLevel, getStartingLevel } from './models/level'
 import { getNextTetromino, getTetromino } from './models/tetromino'
 
 const canvas = document.createElement('canvas')
@@ -100,7 +100,7 @@ function drawHighScores (state) {
   drawInfoElement('Global High Scores:', actual(7))
   const highScoreRows = globalHighScores
     .map(({ score, level, name }, i) => {
-      return [`${i + 1}.`, score.toLocaleString(score), level, name]
+      return [`${i + 1}.`, score.toLocaleString(), level, name]
     })
   highScoreRows.unshift(['', 'Score', 'Level', 'Name'])
 

@@ -4,7 +4,7 @@ import configureStore from './configureStore'
 import drawGame from './drawGame'
 import { KEY } from './constants'
 import { fetchLocalHighScore, fetchGlobalHighScores } from './models/score'
-import { getDropSpeedInMS, getCurrentLevel, incrementStartingLevel } from './models/level'
+import { getDropSpeedInMS, incrementStartingLevel } from './models/level'
 import { moveDown, moveLeft, moveRight, rotate } from './models/tetromino'
 
 const firebaseConfig = {

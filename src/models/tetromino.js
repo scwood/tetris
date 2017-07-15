@@ -1,7 +1,7 @@
 import { BOARD, TETROMINOS } from '../constants'
 import { addTetrominoToGrid, clearCompletedRows, getGrid } from './grid'
-import { everyBlock, getRandomInt, someBlock } from '../utils'
 import { endGame, incrementSpacesSoftDropped, isSoftDropping } from './gameInfo'
+import { everyBlock, getRandomInt, someBlock } from '../utils'
 
 const MOVE_DOWN = 'MOVE_DOWN'
 const MOVE_LEFT = 'MOVE_LEFT'
