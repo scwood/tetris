@@ -7,13 +7,14 @@ script:
   - npm run lint
 before_deploy:
   - npm run build
+  - pip install --user awscli
 deploy:
-  provider: s3
-  access_key_id: AKIAIXOFIDNR7BVDU3BA
-  secret_access_key:
-    secure: q4GQCTtOr7GLhcvODvpyG2XP3cBTXHE4oLFSp3rJu8JonIi6fjJG6cFcDUNEOcYnmcKHrQH4mOVUIFcMFMXStWC/cN8Yk2aE9J+3PVOkNmJCdUtc9c+n79UbMRgIqIUxcjJONanUtEw9BlkSj/YAW+oCnWCYJHLt+K4qsCEgpLBatAvtDGzKB9s3sSpNO15W0iVX5JjjHk6TEasPjlRWbOdAVsZqul8uQnMQpD7R0av+t2nqUh4JrwOSkCxI+6LCb471tVI18DYG0aiAlw8mWLy4mhTrOlZ7t6LBO1cqGtNZOnpgfcLQQ1a5ghjza/vS7akrOk8FtFFvf0NdDRMKBTJ3ze4WXnNJNxnmI+ksC8+0RwZmLuBTGxRXcDW1c5w69bCqBYSaSnmxUsAaWzXGCK6JWYsil/5AN4kvu/v49eTMYLW8oNBaSFCUkYHDGL1JKzqVqeXPj3WRgKBcormcID6ZImjE/haHBW9filltFfrn1T2cFwzeoR7xJlVYn6y4jBdSUhSnvmfRYrFdtKVmAibNhItm5cURqWJfVIcZjOohK/j7oV0mZEw39neASKT0cIOK5yZc1dkwjRiPfYQF5dM8bD06qFYiiji2ARt+v16LNDfU1KiuFCOnE5xaiWsqjfgtBQ/4xwLQJ1iYaE+xGuZvCPS4cnq065bmAh17MQs=
-  bucket: spencercwood-tetris
-  local-dir: dist
-  upload-dir: dist
-  acl: public_read
+  provider: script
+  script: aws s3 sync dist s3://spencercwood-tetris --delete
   skip_cleanup: true
+  on:
+    branch: master
+env:
+  global:
+    - AWSAccessKeyId=AKIAIXOFIDNR7BVDU3BA
+    - secure: nPw2Tmohd6hyIjlGwPHy89QujQJVzPOgyYkP9Ha+yKdmOiOMYTVH73MEreSey0VlynBXHoUnHl4vksjce7B3D+YcdofnMbVu6Rv/oVCbiANJ/OVrADh0uq5q4ue08T3D9re5mjJ5WaeNEzei+eMubt3fnQse0snjVK9gZyh2rmq8d7enjsWtU6Rt4BK2FLuPvv/4hea1T+yRde31Lsjwwfcb59vpKx/VNxruOjteTraUjAPIiEGYDx2CeUsaP7e8pXUiDW7ZA35JZVseYvTVpvzF+22mjgST3UHAuRll5/akduQfnV/aRMkEx6MRAl/PzYFs6xtYmsWyBzZY7J/iAzR6NfU53G1r/J0jGTEKRwk99LxMcgThTe3cmu1Qt/+MER2AwNqoi4Cbv4sxxyoMcrijti2rNKFl53IX6sKHbOsZS718LwgATU+GSmnxjXWRlnLWDUviHZJljyJAjqVGZw/9ozt5v/dccziF8nZvDCLBQ2wF0rk5OE0y7iDo4FqHZM8timdxliwhqXi6yee/Xqn+JZLdSkHIRElwnFezmF3bForahV0Krcx/gINaESY37VpnePzTsMbZ1NoSlYP/MptadtAcxYyR0rbueecxvyQxc3SjNqZ9mVvQWyTSWB+2HdtTIAub10vw5DHCkk/goBMrgh6/GpWSKpI+gX7ZGcM=
