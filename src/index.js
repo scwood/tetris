@@ -14,6 +14,8 @@ const firebaseConfig = {
 }
 firebase.initializeApp(firebaseConfig)
 
+console.log('testing')
+
 const store = configureStore()
 const { dispatch } = store
 
