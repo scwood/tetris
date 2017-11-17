@@ -4,7 +4,7 @@
 
 ## Play it
 
-http://tetris.spncrwd.com
+http://scwood-tetris.s3-website-us-west-1.amazonaws.com/
 
 ## Implementation
 
