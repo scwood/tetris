@@ -1,8 +1,8 @@
-import gameInfo from './models/gameInfo'
-import grid from './models/grid'
-import level from './models/level'
-import score from './models/score'
-import tetromino from './models/tetromino'
+import gameInfo from './gameInfo'
+import grid from './grid'
+import level from './level'
+import score from './score'
+import tetromino from './tetromino'
 import thunk from 'redux-thunk'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   level
 })
 
-export default function configureStore () {
+export function configureStore () {
   return createStore(
     rootReducer,
     applyMiddleware(thunk)

@@ -1,6 +1,6 @@
 import * as firebase from 'firebase'
-import * as gameInfo from './models/gameInfo'
-import configureStore from './configureStore'
+import * as gameInfo from './store/gameInfo'
+import {configureStore} from './store'
 import drawGame from './drawGame'
 import { KEY } from './constants'
 import { fetchLocalHighScore, fetchGlobalHighScores } from './models/score'
