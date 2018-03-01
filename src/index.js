@@ -3,9 +3,9 @@ import * as gameInfo from './store/gameInfo'
 import {configureStore} from './store'
 import drawGame from './drawGame'
 import { KEY } from './constants'
-import { fetchLocalHighScore, fetchGlobalHighScores } from './models/score'
-import { getDropSpeedInMS, incrementStartingLevel } from './models/level'
-import { moveDown, moveLeft, moveRight, rotate } from './models/tetromino'
+import { fetchLocalHighScore, fetchGlobalHighScores } from './store/score'
+import { getDropSpeedInMS, incrementStartingLevel } from './store/level'
+import { moveDown, moveLeft, moveRight, rotate } from './store/tetromino'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBKR3W8dwyU_XdpE9yWIoSFfP6_mIacJkc',
