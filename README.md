@@ -4,7 +4,7 @@
 
 ## Play it
 
-http://scwood-tetris.s3-website-us-west-1.amazonaws.com/
+https://scwood.github.io/tetris/
 
 ## Implementation
 
